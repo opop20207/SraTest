@@ -1,10 +1,27 @@
 
+import { useMoralis } from "react-moralis";
+
+
 function LoginMeta(){
+
+  const { authenticate, isAuthenticated } = useMoralis();
+  
+
+  if (!isAuthenticated) {
+    return (
+      <div>
+        <button onClick={() => authenticate()}>Connect MetaMask</button>
+      </div>
+    );
+  }
  
   return(
         <>
         <div>  
-        <button class="btn btn-primary" id="submit" onClick="login();" >Connect MetaMask</button>
+
+              
+
+       <p>로그인 성공</p>
       </div>
         </>
         
