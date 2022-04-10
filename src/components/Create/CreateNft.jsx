@@ -1,7 +1,7 @@
 import { useMoralis, saveFile } from "react-moralis";
 import { Button } from "react-bootstrap";
 
-import "../static/css/Create.css";
+import "../../static/css/Create.css";
 
 function CreateNft() {
     const { authenticate, isAuthenticated, user } = useMoralis();
