@@ -1,15 +1,37 @@
-import { useMoralis, saveFile } from "react-moralis";
+import { useMoralis, useMoralisFile } from "react-moralis";
 import { Button } from "react-bootstrap";
 
 import "../../static/css/Create.css";
 
 function CreateNft() {
-    const { authenticate, isAuthenticated, user } = useMoralis();
+    const { authenticate, isAuthenticated, user, Moralis } = useMoralis();
+    const { moralisFile, saveFile } = useMoralisFile();
 
-    function upload() {
-        console.log("업로드 함수");
+    async function upload() {
+        console.log("ghcnfdhlsk!!");
+        const fileInput = document.getElementById("file");
+        const data = fileInput.files[0];
+        const imageFile = await saveFile(data.name, data, {
+            saveIPFS: true,
+            throwOnError: true,
+        });
+        const imageURI = imageFile._ipfs;
 
-        //사진 올리기 함수
+        console.log("ghcnfdhlsk!!!!");
+        const obj = {
+            name: document.getElementById("name").value,
+            description: document.getElementById("description").value,
+            image: imageURI,
+        };
+        const file = { base64: btoa(JSON.stringify(obj)) };
+        const mFile = await saveFile("metadata.json", file, {
+            saveIPFS: true,
+            throwOnError: true,
+        });
+        const mFileURI = mFile._ipfs;
+        console.log("ghcnfdhlsk!!!!");
+        const nfts = { imageURI: imageURI, metadataURI: mFileURI };
+        console.log(nfts);
     }
 
     function readImage(e) {
