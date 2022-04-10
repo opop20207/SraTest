@@ -1,4 +1,4 @@
-import CreateNft from './CreateNft'
+import CreateNft from '../Create/CreateNft'
 
 
 function Create(){
