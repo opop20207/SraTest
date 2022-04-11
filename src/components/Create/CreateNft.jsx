@@ -1,5 +1,4 @@
 import { useMoralis } from "react-moralis";
-import { Button } from "react-bootstrap";
 import Web3 from "web3";
 import "../../static/css/Create.css";
 
@@ -41,8 +40,18 @@ function CreateNft() {
             "description",
             document.getElementById("description").value
         );
-        savedData.set("image", imageURI);
+        savedData.set("imageURI", imageURI);
         await savedData.save();
+
+        const savedDataHave = new Moralis.Object("Have");
+        savedDataHave.set("userID", user.get("accounts"));
+        savedDataHave.set("imageURI", imageURI);
+        await savedDataHave.save();
+
+        const savedDataCreated = new Moralis.Object("Created");
+        savedDataCreated.set("userID", user.get("accounts"));
+        savedDataCreated.set("imageURI", imageURI);
+        await savedDataCreated.save();
     }
 
     async function mintToken(_uri) {

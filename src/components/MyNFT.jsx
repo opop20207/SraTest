@@ -1,9 +1,7 @@
+import MyCollection from "./MyNFT/MyCollection";
 
-function MyNFT(){
-
-    return(
-        <p>내 엔프티입니다dsadas</p>
-    );
+function MyNFT() {
+    return <MyCollection />;
 }
 
-export default MyNFT
+export default MyNFT;
