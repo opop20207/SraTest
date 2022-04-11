@@ -1,36 +1,54 @@
 import { useMoralis } from "react-moralis";
+import { useEffect,useState } from "react";
 import Web3 from "web3";
+import ItemCollection from "./ItemColletion";
 function MyCollection() {
     const { authenticate, Moralis, isAuthenticated, user } = useMoralis();
+    const [products, setproducts] = useState([]);
+    const [ Loading , setLoading] = useState(true);
+
+     useEffect(() => {
+        getNFTs().then( (response) => {
+            //console.log(response);
+           setproducts(response);
+            setLoading(false);
+          
+        });
+     },[]);
 
     async function getNFTs() {
         const queryNFTs = new Moralis.Query("NFTs");
         const queryHave = new Moralis.Query("Have");
 
-        queryHave.equalTo("userID", user.get("accounts").toString());
-        const queryHaveByUser = await queryHave.find();
-        let nftArray = [];
-        for (let i = 0; i < queryHaveByUser.length; i++) {
-            const temp = queryHaveByUser[i].get("imageURI");
-            const queryExactNFT = queryNFTs.equalTo("imageURI", temp);
-            const exactNFT = await queryExactNFT.find();
-            const nft = {
-                name: exactNFT[0].get("name"),
-                description: exactNFT[0].get("description"),
-                imageURI: exactNFT[0].get("imageURI"),
-                userID: user.get("accounts").toString,
-                createdAt: exactNFT[0].get("createdAt"),
-            };
-            nftArray.push(nft);
-        }
+        if(user != null){
+            queryHave.equalTo("userID", user.get("accounts").toString());
+            const queryHaveByUser = await queryHave.find();
+            let nftArray = [];
+            for (let i = 0; i < queryHaveByUser.length; i++) {
+                const temp = queryHaveByUser[i].get("imageURI");
+                const queryExactNFT = queryNFTs.equalTo("imageURI", temp);
+                const exactNFT = await queryExactNFT.find();
+                const nft = {
+                    name: exactNFT[0].get("name"),
+                    description: exactNFT[0].get("description"),
+                    imageURI: exactNFT[0].get("imageURI"),
+                    userID: user.get("accounts").toString,
+                    createdAt: exactNFT[0].get("createdAt"),
+                };
+                nftArray.push(nft);
+            }
+        
+
+    
         return nftArray;
+        }
     }
 
     async function populateNFTs() {
-        cleanNFTList();
+      
         const localNFTs = await getNFTs().then(function (data) {
             let nftDisplays = getNFTObjects(data);
-            console.log(data);
+            //console.log(data);
             displayUserNFTs(nftDisplays);
         });
     }
@@ -39,19 +57,13 @@ function MyCollection() {
         let entryPoint = 0;
         let rowId = 0;
         for (let i = 0; i < data.length; i += 5) {
-            let row = `<div id="row_${rowId}" class="row"></div>`;
-            document.getElementById("NFTLists").innerHTML += row;
-            for (let j = entryPoint; j <= entryPoint + 2; j++) {
-                if (j < data.length) {
-                    document.getElementById("row_" + rowId).innerHTML +=
-                        data[j];
-                }
-            }
+           
+           
         }
     }
 
     function cleanNFTList() {
-        document.getElementById("NFTLists").innerHTML = "";
+        
     }
 
     function generateNFTDisplay(id, uri) {
@@ -80,14 +92,25 @@ function MyCollection() {
         );
     }
 
-    populateNFTs();
+
+    
+
     return (
         <div class="temp">
             <p>MyCollecion</p>
-            <p>kkk</p>
-            <div id="NFTLists" class="container"></div>
+            {Loading ? <strong>Loading...</strong> : null}
+            <div id="NFTLists" class="container">
+           
+           <ItemCollection products={products}/>
+
+          
+         
+         
+            </div>
         </div>
     );
+    
+  
 }
 
 export default MyCollection;

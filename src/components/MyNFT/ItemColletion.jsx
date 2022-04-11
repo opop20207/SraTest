@@ -1,19 +1,22 @@
 import React from "react"
 
 
-function Item(props){
+function ItemCollection(props){
 
+   
     const renderItems = () => (
-       
+          
         props.products && props.products.map((product, index) => (
+         
             <div key={index}>
-                <img src={product.img}/>
+               
+               
+                <img src={product.imageURI}/>
                 <div id="content">    
                 
-                <p id="title">{product.title}</p>
+                <p id="title">{product.name}</p>
                 <div id="aligncontent">
-                    <p id="price">{product.price}</p>
-                    <p id="goods">{product.goods}</p>
+                    <p id="price">{product.description}</p>
                 </div>
                 </div>
             </div>
@@ -21,10 +24,10 @@ function Item(props){
     )
 
     return(
-
+        console.log(props.products),
         renderItems()
     
     )
 }
 
-export default Item
+export default ItemCollection
