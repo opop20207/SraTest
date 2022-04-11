@@ -140,7 +140,9 @@ function CreateNft() {
                             aria-describedby="basic-addon1"
                         />
                     </div>
+                    <img id="preview-image" />
                     <div class="input-group mb-3">
+                       
                         <input
                             type="file"
                             name="file"
@@ -149,7 +151,7 @@ function CreateNft() {
                             onChange={readImage}
                         />
                         <label for="file">Choose a file</label>
-                        <img id="preview-image" />
+                       
                     </div>
                 </div>
                 <div>

@@ -13,11 +13,13 @@ function Header() {
         const result = [];
         for (let i = 0; i < urls.length; i++) {
             result.push(
-                <a>
+
+               <Menu.Item>
                     <Link to = {urls[i]}>
-                        {names[i]}
+                         <a>{names[i]}</a>
                     </Link>
-                </a>
+               </Menu.Item>     
+               
             );
         }
         return result;
@@ -28,18 +30,24 @@ function Header() {
             <nav>
                 <div class="UpperNav">
                     <div class="navContainer">
-                        { linkToNavContainer() }
+                    
+                        <Menu mode="horizontal">
+                            {linkToNavContainer()}
+                     </Menu>
                         
                     </div>
 
                     <div class="loginContainer">
-                        <a>
-                            {" "}
-                            <Link to="/LoginMeta">Login</Link>
-                        </a>
-                        <a class="registerBox" href="">
-                            register
-                        </a>
+
+                        <Menu mode="horizontal">
+                         <Menu.Item>
+                            <Link to = "/LoginMeta"><a>Login</a> </Link>
+                          </Menu.Item>    
+                          <Menu.Item>
+                          <Link to = "/Setting"><a>Setting</a> </Link>
+                          </Menu.Item>
+                        </Menu>
+                      
                     </div>
                 </div>
             </nav>
