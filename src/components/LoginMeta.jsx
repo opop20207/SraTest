@@ -3,6 +3,8 @@ import { useMoralis } from "react-moralis";
 function LoginMeta() {
     const { authenticate, isAuthenticated } = useMoralis();
 
+
+
     if (!isAuthenticated) {
         return (
             <div>
