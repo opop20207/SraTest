@@ -1,15 +1,81 @@
-import { useMoralis, saveFile } from "react-moralis";
+import { useMoralis } from "react-moralis";
 import { Button } from "react-bootstrap";
-
+import Web3 from "web3";
 import "../../static/css/Create.css";
 
 function CreateNft() {
-    const { authenticate, isAuthenticated, user } = useMoralis();
+    const { authenticate, isAuthenticated, user, Moralis } = useMoralis();
+    const nft_contract_address = "0x3d05364012a5f131e3a32a68deba6c23041fb917"; //NFT Minting Contract Use This One "Batteries Included", code of this contract is in the github repository under contract_base for your reference.
+    const web3 = new Web3(Web3.givenProvider);
 
-    function upload() {
-        console.log("업로드 함수");
+    async function upload() {
+        console.log("ghcnfdhlsk!!");
+        const fileInput = document.getElementById("file");
+        const data = fileInput.files[0];
+        const imageFile = new Moralis.File(data.name, data);
+        document.getElementById("upload").setAttribute("disabled", null);
+        document.getElementById("file").setAttribute("disabled", null);
+        document.getElementById("name").setAttribute("disabled", null);
+        document.getElementById("description").setAttribute("disabled", null);
+        await imageFile.saveIPFS();
 
-        //사진 올리기 함수
+        const imageURI = imageFile.ipfs();
+        const metadata = {
+            name: document.getElementById("name").value,
+            description: document.getElementById("description").value,
+            image: imageURI,
+        };
+        console.log(" ** Image IPFS URI : ", imageURI, " **");
+        const metadataFile = new Moralis.File("metadata.json", {
+            base64: btoa(JSON.stringify(metadata)),
+        });
+        await metadataFile.saveIPFS();
+
+        const metadataURI = metadataFile.ipfs();
+        console.log(metadataURI);
+        const tokenID = await mintToken(metadataURI).then(notify);
+
+        const savedData = new Moralis.Object("NFTs");
+        savedData.set("name", document.getElementById("name").value);
+        savedData.set(
+            "description",
+            document.getElementById("description").value
+        );
+        savedData.set("image", imageURI);
+        await savedData.save();
+    }
+
+    async function mintToken(_uri) {
+        const encodedFunction = web3.eth.abi.encodeFunctionCall(
+            {
+                name: "mintToken",
+                type: "function",
+                inputs: [
+                    {
+                        type: "string",
+                        name: "tokenURI",
+                    },
+                ],
+            },
+            [_uri]
+        );
+
+        const transactionParameters = {
+            to: nft_contract_address,
+            from: window.ethereum.selectedAddress,
+            data: encodedFunction,
+        };
+        const txt = await window.ethereum.request({
+            method: "eth_sendTransaction",
+            params: [transactionParameters],
+        });
+        return txt;
+    }
+
+    async function notify(_txt) {
+        document.getElementById(
+            "resultSpace"
+        ).innerHTML = `<input disabled = "true" id="result" type="text" class="form-control" placeholder="Description" aria-label="URL" aria-describedby="basic-addon1" value="Your NFT was minted in transaction ${_txt}">`;
     }
 
     function readImage(e) {
