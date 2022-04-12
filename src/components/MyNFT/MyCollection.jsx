@@ -1,51 +1,31 @@
 import { useMoralis } from "react-moralis";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import Web3 from "web3";
+import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
 import ItemCollection from "./ItemColletion";
 function MyCollection() {
-    const { authenticate, Moralis, isAuthenticated, user } = useMoralis();
+    const { authenticate, Moralis, isAuthenticated } = useMoralis();
+    const { walletAddress } = useMoralisDapp;
     const [products, setproducts] = useState([]);
-    const [ Loading , setLoading] = useState(true);
+    const [Loading, setLoading] = useState(true);
 
-     useEffect(() => {
-        getNFTs().then( (response) => {
+    useEffect(() => {
+        getNFTs().then((response) => {
             //console.log(response);
-           setproducts(response);
+            setproducts(response);
             setLoading(false);
-          
         });
-     },[]);
+    }, []);
 
     async function getNFTs() {
         const queryNFTs = new Moralis.Query("NFTs");
-        const queryHave = new Moralis.Query("Have");
+        const datas = queryNFTs.equalTo("userID");
+        let nftArray = [];
 
-        if(user != null){
-            queryHave.equalTo("userID", user.get("accounts").toString());
-            const queryHaveByUser = await queryHave.find();
-            let nftArray = [];
-            for (let i = 0; i < queryHaveByUser.length; i++) {
-                const temp = queryHaveByUser[i].get("imageURI");
-                const queryExactNFT = queryNFTs.equalTo("imageURI", temp);
-                const exactNFT = await queryExactNFT.find();
-                const nft = {
-                    name: exactNFT[0].get("name"),
-                    description: exactNFT[0].get("description"),
-                    imageURI: exactNFT[0].get("imageURI"),
-                    userID: user.get("accounts").toString,
-                    createdAt: exactNFT[0].get("createdAt"),
-                };
-                nftArray.push(nft);
-            }
-        
-
-    
         return nftArray;
-        }
     }
 
     async function populateNFTs() {
-      
         const localNFTs = await getNFTs().then(function (data) {
             let nftDisplays = getNFTObjects(data);
             //console.log(data);
@@ -56,15 +36,10 @@ function MyCollection() {
     function displayUserNFTs(data) {
         let entryPoint = 0;
         let rowId = 0;
-        for (let i = 0; i < data.length; i += 5) {
-           
-           
-        }
+        for (let i = 0; i < data.length; i += 5) {}
     }
 
-    function cleanNFTList() {
-        
-    }
+    function cleanNFTList() {}
 
     function generateNFTDisplay(id, uri) {
         const nftDisplay = `<div id="${id}" class="col-lg-4 text-center">
@@ -92,25 +67,15 @@ function MyCollection() {
         );
     }
 
-
-    
-
     return (
         <div class="temp">
             <p>MyCollecion</p>
             {Loading ? <strong>Loading...</strong> : null}
             <div id="NFTLists" class="container">
-           
-           <ItemCollection products={products}/>
-
-          
-         
-         
+                <ItemCollection products={products} />
             </div>
         </div>
     );
-    
-  
 }
 
 export default MyCollection;

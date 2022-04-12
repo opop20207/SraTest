@@ -1,9 +1,8 @@
 import { useMoralis } from "react-moralis";
+import Account from "./Account";
 
 function LoginMeta() {
-    const { authenticate, isAuthenticated } = useMoralis();
-
-
+    const { authenticate, isAuthenticated, logout } = useMoralis();
 
     if (!isAuthenticated) {
         return (
@@ -16,6 +15,13 @@ function LoginMeta() {
     return (
         <>
             <div>
+                <Account />
+                <button
+                    onClick={() => {
+                        logout();
+                    }}>
+                    logout
+                </button>
                 <p>로그인 성공</p>
             </div>
         </>
