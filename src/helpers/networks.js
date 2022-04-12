@@ -1,23 +1,28 @@
 export const networkConfigs = {
     "0x1": {
         currencySymbol: "ETH",
+        chainName: "Ethereum Mainnet",
         blockExplorerUrl: "https://etherscan.io/",
         wrapped: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
     },
     "0x3": {
         currencySymbol: "ETH",
+        chainName: "Ethereum Testnet - Ropsten",
         blockExplorerUrl: "https://ropsten.etherscan.io/",
-    },
-    "0x4": {
-        currencySymbol: "ETH",
-        blockExplorerUrl: "https://kovan.etherscan.io/",
     },
     "0x2a": {
         currencySymbol: "ETH",
+        chainName: "Ethereum Testnet - Kovan",
+        blockExplorerUrl: "https://kovan.etherscan.io/",
+    },
+    "0x4": {
+        currencySymbol: "ETH",
+        chainName: "Ethereum Testnet - Rinkeby",
         blockExplorerUrl: "https://rinkeby.etherscan.io/",
     },
     "0x5": {
         currencySymbol: "ETH",
+        chainName: "Ethereum Testnet - Goerli",
         blockExplorerUrl: "https://goerli.etherscan.io/",
     },
     "0x539": {

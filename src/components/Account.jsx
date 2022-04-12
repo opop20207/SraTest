@@ -3,7 +3,7 @@ import { useMoralis } from "react-moralis";
 import Blockie from "./Blockie";
 import { useState } from "react";
 import { Button, Card, Modal } from "antd";
-import { getExplorer } from "../helpers/networks";
+import { getExplorer, networkConfigs } from "../helpers/networks";
 import Address from "./Address/Address";
 import { getEllipsisTxt } from "../helpers/formatters";
 
@@ -42,11 +42,68 @@ function Account() {
 
     return (
         <>
-            <div style={styles.account}>
-                <p style={{ marginRight: "5px", ...styles.text }}>
+            <div style={styles.account} onClick={() => setIsModalVisible(true)}>
+                <Blockie currentWallet scale={3} />
+                <div style={{ marginRight: "5px", ...styles.text }}>
                     {getEllipsisTxt(walletAddress, 6)}
-                </p>
+                </div>
             </div>
+            <Modal
+                visible={isModalVisible}
+                footer={null}
+                onCancel={() => setIsModalVisible(false)}
+                bodyStyle={{
+                    padding: "15px",
+                    fontSize: "17px",
+                    fontWeight: "500",
+                }}
+                style={{ fontSize: "16px", fontWeight: "500" }}
+                width="400px">
+                Account
+                <Card
+                    style={{
+                        marginTop: "10px",
+                        borderRadius: "1rem",
+                    }}
+                    bodyStyle={{ padding: "15px" }}>
+                    <Address
+                        avatar="left"
+                        size={6}
+                        copyable
+                        style={{ fontSize: "20px" }}
+                    />
+                    <div style={{ marginTop: "10px", padding: "0 10px" }}>
+                        <a
+                            href={`${getExplorer(
+                                chainId
+                            )}/address/${walletAddress}`}
+                            target="_blank"
+                            rel="noreferrer">
+                            View on Explorer
+                        </a>
+                    </div>
+                    <div style={{ marginTop: "10px", padding: "0 10px" }}>
+                        {console.log(chainId)}
+                        {networkConfigs[chainId]?.chainName}
+                    </div>
+                </Card>
+                <Button
+                    size="large"
+                    type="primary"
+                    style={{
+                        width: "100%",
+                        marginTop: "10px",
+                        borderRadius: "0.5rem",
+                        fontSize: "16px",
+                        fontWeight: "500",
+                    }}
+                    onClick={() => {
+                        logout();
+                        setIsModalVisible(false);
+                    }}>
+                    Disconnect Wallet
+                </Button>
+            </Modal>
         </>
     );
 }

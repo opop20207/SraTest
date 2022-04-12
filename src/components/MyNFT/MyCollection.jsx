@@ -21,6 +21,7 @@ function MyCollection() {
         console.log(walletAddress);
         const queryNFTs = new Moralis.Query("NFTs");
         queryNFTs.equalTo("ownerOf", Web3.givenProvider.selectedAddress);
+        queryNFTs.ascending("updatedAt");
         const datas = await queryNFTs.find();
         let nftArray = [];
         for (let i = 0; i < datas.length; i++) {
