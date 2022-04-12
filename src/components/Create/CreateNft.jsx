@@ -1,11 +1,13 @@
 import { useMoralis } from "react-moralis";
 import Web3 from "web3";
+import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
 import "../../static/css/Create.css";
 
 function CreateNft() {
-    const { authenticate, isAuthenticated, user, Moralis } = useMoralis();
+    const { authenticate, isAuthenticated, Moralis } = useMoralis();
     const nft_contract_address = "0x3d05364012a5f131e3a32a68deba6c23041fb917"; //NFT Minting Contract Use This One "Batteries Included", code of this contract is in the github repository under contract_base for your reference.
     const web3 = new Web3(Web3.givenProvider);
+    const { walletAddress } = useMoralisDapp();
 
     async function upload() {
         console.log("ghcnfdhlsk!!");
@@ -41,17 +43,11 @@ function CreateNft() {
             document.getElementById("description").value
         );
         savedData.set("imageURI", imageURI);
+        console.log(walletAddress);
+        savedData.set("ownerOf", walletAddress);
+        savedData.set("createdBy", walletAddress);
+
         await savedData.save();
-
-        const savedDataHave = new Moralis.Object("Have");
-        savedDataHave.set("userID", user.get("accounts"));
-        savedDataHave.set("imageURI", imageURI);
-        await savedDataHave.save();
-
-        const savedDataCreated = new Moralis.Object("Created");
-        savedDataCreated.set("userID", user.get("accounts"));
-        savedDataCreated.set("imageURI", imageURI);
-        await savedDataCreated.save();
     }
 
     async function mintToken(_uri) {
@@ -71,7 +67,7 @@ function CreateNft() {
 
         const transactionParameters = {
             to: nft_contract_address,
-            from: window.ethereum.selectedAddress,
+            from: walletAddress,
             data: encodedFunction,
         };
         const txt = await window.ethereum.request({
@@ -142,7 +138,6 @@ function CreateNft() {
                     </div>
                     <img id="preview-image" />
                     <div class="input-group mb-3">
-                       
                         <input
                             type="file"
                             name="file"
@@ -151,7 +146,6 @@ function CreateNft() {
                             onChange={readImage}
                         />
                         <label for="file">Choose a file</label>
-                       
                     </div>
                 </div>
                 <div>

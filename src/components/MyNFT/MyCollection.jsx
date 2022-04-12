@@ -5,57 +5,34 @@ import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappP
 import ItemCollection from "./ItemColletion";
 function MyCollection() {
     const { authenticate, Moralis, isAuthenticated } = useMoralis();
-    const { walletAddress } = useMoralisDapp;
     const [products, setproducts] = useState([]);
     const [Loading, setLoading] = useState(true);
+    const { walletAddress } = useMoralisDapp();
 
     useEffect(() => {
         getNFTs().then((response) => {
-            //console.log(response);
+            console.log(response);
             setproducts(response);
             setLoading(false);
         });
     }, []);
 
     async function getNFTs() {
+        console.log(walletAddress);
         const queryNFTs = new Moralis.Query("NFTs");
-        const datas = queryNFTs.equalTo("userID");
+        queryNFTs.equalTo("ownerOf", Web3.givenProvider.selectedAddress);
+        const datas = await queryNFTs.find();
         let nftArray = [];
-
-        return nftArray;
-    }
-
-    async function populateNFTs() {
-        const localNFTs = await getNFTs().then(function (data) {
-            let nftDisplays = getNFTObjects(data);
-            //console.log(data);
-            displayUserNFTs(nftDisplays);
-        });
-    }
-
-    function displayUserNFTs(data) {
-        let entryPoint = 0;
-        let rowId = 0;
-        for (let i = 0; i < data.length; i += 5) {}
-    }
-
-    function cleanNFTList() {}
-
-    function generateNFTDisplay(id, uri) {
-        const nftDisplay = `<div id="${id}" class="col-lg-4 text-center">
-                            ${id}
-                            <img src=${uri} class="img-fluid rounded" style="max-width: 30%">
-                            <button id="button_${id}" class="btn btn-dark" onclick="selectNFT(this);">Select</button>
-                        </div>`;
-        return nftDisplay;
-    }
-
-    function getNFTObjects(array) {
-        let nfts = [];
-        for (let i = 0; i < array.length; i++) {
-            nfts.push(generateNFTDisplay(array[i].name, array[i].imageURI));
+        for (let i = 0; i < datas.length; i++) {
+            const nft = {
+                name: datas[i].get("name"),
+                description: datas[i].get("description"),
+                imageURI: datas[i].get("imageURI"),
+                ownerOf: datas[i].get("ownerOf"),
+            };
+            nftArray.push(nft);
         }
-        return nfts;
+        return nftArray;
     }
 
     if (!isAuthenticated) {
