@@ -14,7 +14,7 @@ function App() {
         <div className="App">
             <header className="App-header">
                 <Router>
-                    <HeaderTemp />
+                    <Header />
                     <Routes>
                         <Route path="/" element={<Main />}></Route>
                         <Route path="/MyNFT" element={<MyNFT />}></Route>
