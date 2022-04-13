@@ -7,6 +7,9 @@ import MyNFT from "./components/MyNFT";
 import Create from "./components/Create";
 import MarketPlace from "./components/MarketPlace";
 import LoginMeta from "./components/LoginMeta";
+import Selling from "./components/MyNFT/Selling";
+import MyCollection from "./components/MyNFT/MyCollection";
+import CustomAvatar from "./components/MyNFT/CustomAvatar";
 import "antd/dist/antd.css";
 
 function App() {
@@ -26,6 +29,10 @@ function App() {
                         <Route
                             path="/LoginMeta"
                             element={<LoginMeta />}></Route>
+
+                        <Route path="/SellingNFT" element={<Selling />}></Route>
+                        <Route path="/MyCollection" element={<MyCollection />}></Route>
+                        <Route path="/CustomAvatar" element={<CustomAvatar />}></Route>
                     </Routes>
 
                     <Footer />
