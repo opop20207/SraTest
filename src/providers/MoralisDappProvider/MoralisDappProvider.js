@@ -9,11 +9,11 @@ function MoralisDappProvider({ children }) {
     const [chainId, setChainId] = useState();
 
     useEffect(() => {
-        window.ethereum.on("accountsChanged", (account) =>
+        window.ethereum?.on("accountsChanged", (account) =>
             setWalletAddress(account)
         );
 
-        window.ethereum.on("chainChanged", (chain) => setChainId("chain"));
+        window.ethereum?.on("chainChanged", (chain) => setChainId("chain"));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
