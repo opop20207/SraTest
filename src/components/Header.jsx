@@ -29,11 +29,10 @@ function Header() {
                                 key="MyNFT"
                                 style={{ color: "black" }}>
                                 <MenuItem key="MyNFT-SellingNFT">
-                                    <Link to={"/SellingNFT"}>
+                                    <Link to={"/SellingNFT"} style={{textDecoration:'none'}}>
                                         <span
                                             style={{
-                                                color: "black",
-                                                textDecoration: "none"
+                                                color: "black"
                                             }}>
                                             Selling NFT
                                         </span>
@@ -43,7 +42,7 @@ function Header() {
                                 <Divider />
 
                                 <MenuItem key="MyNFT-MyCollection">
-                                    <Link to={"/MyCollection"}>
+                                    <Link to={"/MyCollection"} style={{textDecoration:'none'}}>
                                         <span 
                                             style={{ 
                                                 color: "black" }}>
@@ -55,7 +54,7 @@ function Header() {
                                 <Divider />
 
                                 <MenuItem key="MyNFT-CustomAvatar">
-                                    <Link to={"/CustomAvatar"}>
+                                    <Link to={"/CustomAvatar"} style={{textDecoration:'none'}}>
                                         <span 
                                             style={{ 
                                                 color: "black" }}>
