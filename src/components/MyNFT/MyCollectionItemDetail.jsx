@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import { useMoralis } from "react-moralis";
 import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
 
-function ItemDetail() {
+function MyCollectionItemDetail() {
     const { id } = useParams();
     const { Moralis } = useMoralis();
     const [nft, setNft] = useState();
@@ -36,8 +36,9 @@ function ItemDetail() {
         <>
             <p>itemDetailPage item ID : {id}</p>
             <img src={nft?.imageURI} />
+            <NavLink to={`/myCollection/${id}/sell`}>sell</NavLink>
         </>
     );
 }
 
-export default ItemDetail;
+export default MyCollectionItemDetail;

@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-function ItemCollection(props) {
+function MyCollectionItem(props) {
     const renderItems = () =>
         props.products &&
         props.products.map((product) => (
@@ -21,4 +21,4 @@ function ItemCollection(props) {
     return console.log(props.products), renderItems();
 }
 
-export default ItemCollection;
+export default MyCollectionItem;

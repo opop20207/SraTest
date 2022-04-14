@@ -2,7 +2,7 @@ import { useMoralis } from "react-moralis";
 import { useEffect, useState } from "react";
 import Web3 from "web3";
 import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
-import ItemCollection from "./ItemColletion";
+import MyCollectionItem from "./MyCollectionItem";
 function MyCollection() {
     const { authenticate, Moralis, isAuthenticated, user, refetchUserData } =
         useMoralis();
@@ -67,7 +67,7 @@ function MyCollection() {
             <p>MyCollecion</p>
             {Loading ? <strong>Loading...</strong> : null}
             <div id="NFTLists" class="container">
-                <ItemCollection products={products} />
+                <MyCollectionItem products={products} />
             </div>
         </div>
     );

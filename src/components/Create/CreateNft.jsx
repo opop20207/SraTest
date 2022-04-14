@@ -1,3 +1,4 @@
+import { ThemeProvider } from "react-bootstrap";
 import { useMoralis } from "react-moralis";
 import Web3 from "web3";
 import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
@@ -34,7 +35,7 @@ function CreateNft() {
 
         const metadataURI = metadataFile.ipfs();
         console.log(metadataURI);
-        const tokenID = await mintToken(metadataURI).then(notify);
+        const tx = await mintToken(metadataURI);
 
         const savedData = new Moralis.Object("NFTs");
         savedData.set("name", document.getElementById("name").value);
@@ -46,6 +47,7 @@ function CreateNft() {
         console.log(walletAddress);
         savedData.set("ownerOf", walletAddress);
         savedData.set("createdBy", walletAddress);
+        savedData.set("tx", tx);
 
         await savedData.save();
     }
@@ -74,6 +76,7 @@ function CreateNft() {
             method: "eth_sendTransaction",
             params: [transactionParameters],
         });
+        console.log(txt);
         return txt;
     }
 
