@@ -12,7 +12,7 @@ function MyCollectionItemSell() {
     const { walletAddress } = useMoralisDapp();
     const { id } = useParams();
     const [nft, setNft] = useState();
-    const [isTokenAvailable, setIsTokenAvailable] = useState(true);
+    const [tokenId, setTokenId] = useState(null);
     const web3 = new Web3(window.ethereum);
 
     useEffect(() => {
@@ -36,14 +36,14 @@ function MyCollectionItemSell() {
             tx: data[0].get("tx"),
         };
         const receipt = await web3.eth.getTransactionReceipt(data[0].get("tx"));
-        if (!receipt) {
-            setIsTokenAvailable(true);
-            console.log(receipt.logs[0].topics[3]);
-        } else {
-            setIsTokenAvailable(false);
+        if (receipt == null) {
+            setTokenId(null);
             console.log(
                 "아직 컨트랙트가 종료되지 않았거나, 해당 토큰 정보가 체인 상에 없습니다. 확인 후 재시도해주세요."
             );
+        } else {
+            setTokenId(receipt.logs[0].topics[3]);
+            console.log(receipt.logs[0].topics[3]);
         }
         console.log("!@!@#!@#@");
         return dataFormed;
@@ -141,9 +141,10 @@ function MyCollectionItemSell() {
     //     });
     //     return txt;
     // }
-    if (isTokenAvailable) {
+    if (tokenId != null) {
         return (
             <>
+                <p># your token ID : {web3.utils.hexToNumber(tokenId)}</p>
                 <p>itemDetailPage item ID : {id}</p>
                 <img src={nft?.imageURI} />
                 <button onclick={`offerNFT()`}></button>
@@ -153,8 +154,18 @@ function MyCollectionItemSell() {
         return (
             <>
                 <p>
-                    아직 컨트랙트가 종료되지 않았거나, 해당 토큰 정보가 체인
-                    상에 없습니다. 확인 후 재시도해주세요.
+                    로딩중입니다. 로딩이 길어질 경우 아래의 경우일 수 있으니
+                    확인해주세요
+                </p>
+                <hr />
+                <p>1. 해당 컨트랙트가 종료되지 않았을 경우</p>
+                <p>
+                    2. DB가 오래된 버전을 사용해 데이터를 포함하지 않고 있을
+                    경우
+                </p>
+                <p>
+                    3. 모종의 문제로 DB에는 올라갔으나 체인상에 등재되지 않은
+                    경우
                 </p>
             </>
         );

@@ -36,7 +36,7 @@ function MyCollection() {
     async function getNFTs() {
         const queryNFTs = new Moralis.Query("NFTs");
         queryNFTs.equalTo("ownerOf", walletAddress);
-        queryNFTs.ascending("updatedAt");
+        queryNFTs.descending("updatedAt");
         const datas = await queryNFTs.find();
         console.log(datas);
         let dataFormedArray = [];
