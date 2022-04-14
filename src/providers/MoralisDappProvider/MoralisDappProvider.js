@@ -19,13 +19,11 @@ function MoralisDappProvider({ children }) {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => setChainId(Web3.givenProvider?.chainId));
-    useEffect(
-        () =>
-            setWalletAddress(
-                Web3.givenProvider?.selectedAddress || user?.get("ethAddress")
-            ),
-        [Web3, user]
-    );
+    useEffect(() => {
+        setWalletAddress(
+            Web3.givenProvider?.selectedAddress || user?.get("ethAddress")
+        );
+    }, [Web3, user]);
 
     return (
         <MoralisDappContext.Provider
@@ -40,7 +38,7 @@ function MoralisDappProvider({ children }) {
 
 function useMoralisDapp() {
     const context = React.useContext(MoralisDappContext);
-    if (context === undefined) {
+    if (context == null) {
         throw new Error(
             "useMoralisDapp must be used within a MoralisDappProvider"
         );

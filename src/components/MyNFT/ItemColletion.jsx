@@ -4,7 +4,7 @@ function ItemCollection(props) {
     const renderItems = () =>
         props.products &&
         props.products.map((product, index) => (
-            <div key={index}>
+            <div key={index} href="/MyCollection/">
                 <img src={product.imageURI} />
                 <div id="content">
                     <p id="title">{product.name}</p>

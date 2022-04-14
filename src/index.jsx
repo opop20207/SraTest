@@ -10,6 +10,7 @@ import { MoralisDappProvider } from "./providers/MoralisDappProvider/MoralisDapp
 
 const rootNode = document.getElementById("root");
 
+console.log("FROMMORALISPROVIDER");
 ReactDOMClient.createRoot(rootNode).render(
     <MoralisProvider
         appId="xdtQW4Rhkc0GvRzudL16sGGaO2fadoqESl8fkwIJ"

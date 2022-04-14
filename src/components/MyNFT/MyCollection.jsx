@@ -4,28 +4,45 @@ import Web3 from "web3";
 import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
 import ItemCollection from "./ItemColletion";
 function MyCollection() {
-    const { authenticate, Moralis, isAuthenticated } = useMoralis();
+    const { authenticate, Moralis, isAuthenticated, user, refetchUserData } =
+        useMoralis();
     const [products, setproducts] = useState([]);
     const [Loading, setLoading] = useState(true);
     const { walletAddress } = useMoralisDapp();
 
     useEffect(() => {
+        if (!walletAddress) return;
         getNFTs().then((response) => {
-            console.log(response);
+            console.log("FROM");
             setproducts(response);
+            console.log(response);
+            products.map((product, index) => (
+                <div key={index} href="/MyCollection/">
+                    <img src={product.imageURI} />
+                    <div id="content">
+                        <p id="title">{product.name}</p>
+                        <div id="aligncontent">
+                            <p id="price">{product.description}</p>
+                        </div>
+                    </div>
+                </div>
+            ));
+            console.log(products);
+            console.log("FROMED");
             setLoading(false);
         });
-    }, []);
+    }, [walletAddress]);
 
     async function getNFTs() {
-        console.log(walletAddress);
         const queryNFTs = new Moralis.Query("NFTs");
-        queryNFTs.equalTo("ownerOf", Web3.givenProvider.selectedAddress);
+        queryNFTs.equalTo("ownerOf", walletAddress);
         queryNFTs.ascending("updatedAt");
         const datas = await queryNFTs.find();
+        console.log(datas);
         let nftArray = [];
         for (let i = 0; i < datas.length; i++) {
             const nft = {
+                id: datas[i].get("id"),
                 name: datas[i].get("name"),
                 description: datas[i].get("description"),
                 imageURI: datas[i].get("imageURI"),
