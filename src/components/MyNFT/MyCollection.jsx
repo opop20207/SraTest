@@ -39,18 +39,18 @@ function MyCollection() {
         queryNFTs.ascending("updatedAt");
         const datas = await queryNFTs.find();
         console.log(datas);
-        let nftArray = [];
+        let dataFormedArray = [];
         for (let i = 0; i < datas.length; i++) {
-            const nft = {
+            const dataFormed = {
                 id: datas[i].id,
                 name: datas[i].get("name"),
                 description: datas[i].get("description"),
                 imageURI: datas[i].get("imageURI"),
                 ownerOf: datas[i].get("ownerOf"),
             };
-            nftArray.push(nft);
+            dataFormedArray.push(dataFormed);
         }
-        return nftArray;
+        return dataFormedArray;
     }
 
     if (!isAuthenticated) {
