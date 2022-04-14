@@ -17,7 +17,7 @@ function MyCollection() {
             setproducts(response);
             console.log(response);
             products.map((product, index) => (
-                <div key={index} href="/MyCollection/">
+                <div key={index}>
                     <img src={product.imageURI} />
                     <div id="content">
                         <p id="title">{product.name}</p>
