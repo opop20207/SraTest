@@ -42,7 +42,7 @@ function MyCollection() {
         let nftArray = [];
         for (let i = 0; i < datas.length; i++) {
             const nft = {
-                id: datas[i].get("id"),
+                id: datas[i].id,
                 name: datas[i].get("name"),
                 description: datas[i].get("description"),
                 imageURI: datas[i].get("imageURI"),
