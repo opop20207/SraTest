@@ -14,18 +14,18 @@ function Header() {
                         <Menu mode="horizontal">
                             <MenuItem key="CLone.ns">
                                 <Link to={"/"}>
-                                    <a>CLone.ns</a>
+                                    <span>CLone.ns</span>
                                 </Link>
                             </MenuItem>
 
                             <MenuItem key="MarketPlace">
                                 <Link to={"/MarketPlace"}>
-                                    <a>MarketPlace</a>
+                                    <span>MarketPlace</span>
                                 </Link>
                             </MenuItem>
 
                             <SubMenu
-                                title={<a>My NFT</a>}
+                                title={<span>My NFT</span>}
                                 key="MyNFT"
                                 style={{ color: "black" }}>
                                 <MenuItem key="MyNFT-SellingNFT">
@@ -66,7 +66,7 @@ function Header() {
 
                             <MenuItem key="Create">
                                 <Link to={"/Create"}>
-                                    <a>Create</a>
+                                    <span>Create</span>
                                 </Link>
                             </MenuItem>
                         </Menu>

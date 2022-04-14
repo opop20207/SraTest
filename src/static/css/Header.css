@@ -24,6 +24,12 @@
     font-size: 30px;
 }
 
+.UpperNav span{
+    margin-left: 10px;
+    text-decoration: none;
+    font-size: 30px;
+}
+
 .UpperNav a:link{
     color: rgb(0, 0, 0);
 }
