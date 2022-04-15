@@ -13,22 +13,7 @@ function MyCollection() {
     useEffect(() => {
         if (!walletAddress) return;
         getNFTs().then((response) => {
-            console.log("FROM");
             setproducts(response);
-            console.log(response);
-            products.map((product, index) => (
-                <div key={index}>
-                    <img src={product.imageURI} />
-                    <div id="content">
-                        <p id="title">{product.name}</p>
-                        <div id="aligncontent">
-                            <p id="price">{product.description}</p>
-                        </div>
-                    </div>
-                </div>
-            ));
-            console.log(products);
-            console.log("FROMED");
             setLoading(false);
         });
     }, [walletAddress]);
@@ -38,7 +23,6 @@ function MyCollection() {
         queryNFTs.equalTo("ownerOf", walletAddress);
         queryNFTs.descending("updatedAt");
         const datas = await queryNFTs.find();
-        console.log(datas);
         let dataFormedArray = [];
         for (let i = 0; i < datas.length; i++) {
             const dataFormed = {

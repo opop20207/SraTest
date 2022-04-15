@@ -26,7 +26,6 @@ function MyCollectionItemSell() {
         const queryNFTs = new Moralis.Query("NFTs");
         queryNFTs.equalTo("objectId", id);
         const data = await queryNFTs.find();
-        console.log(data);
         const dataFormed = {
             id: data[0].id,
             name: data[0].get("name"),
@@ -38,14 +37,9 @@ function MyCollectionItemSell() {
         const receipt = await web3.eth.getTransactionReceipt(data[0].get("tx"));
         if (receipt == null) {
             setTokenId(null);
-            console.log(
-                "아직 컨트랙트가 종료되지 않았거나, 해당 토큰 정보가 체인 상에 없습니다. 확인 후 재시도해주세요."
-            );
         } else {
             setTokenId(receipt.logs[0].topics[3]);
-            console.log(receipt.logs[0].topics[3]);
         }
-        console.log("!@!@#!@#@");
         return dataFormed;
     }
 
@@ -141,6 +135,7 @@ function MyCollectionItemSell() {
     //     });
     //     return txt;
     // }
+
     if (tokenId != null) {
         return (
             <>
