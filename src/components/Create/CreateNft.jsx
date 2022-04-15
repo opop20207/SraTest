@@ -11,7 +11,6 @@ function CreateNft() {
     const { walletAddress } = useMoralisDapp();
 
     async function upload() {
-        console.log("ghcnfdhlsk!!");
         const fileInput = document.getElementById("file");
         const data = fileInput.files[0];
         const imageFile = new Moralis.File(data.name, data);
@@ -27,14 +26,13 @@ function CreateNft() {
             description: document.getElementById("description").value,
             image: imageURI,
         };
-        console.log(" ** Image IPFS URI : ", imageURI, " **");
+
         const metadataFile = new Moralis.File("metadata.json", {
             base64: btoa(JSON.stringify(metadata)),
         });
         await metadataFile.saveIPFS();
 
         const metadataURI = metadataFile.ipfs();
-        console.log(metadataURI);
         const tx = await mintToken(metadataURI);
 
         const savedData = new Moralis.Object("NFTs");
@@ -44,7 +42,6 @@ function CreateNft() {
             document.getElementById("description").value
         );
         savedData.set("imageURI", imageURI);
-        console.log(walletAddress);
         savedData.set("ownerOf", walletAddress);
         savedData.set("createdBy", walletAddress);
         savedData.set("tx", tx);
