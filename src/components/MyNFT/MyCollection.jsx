@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Web3 from "web3";
 import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
 import MyCollectionItem from "./MyCollectionItem";
+
 function MyCollection() {
     const { authenticate, Moralis, isAuthenticated, user, refetchUserData } =
         useMoralis();

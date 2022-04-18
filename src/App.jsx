@@ -13,6 +13,8 @@ import CustomAvatar from "./components/MyNFT/CustomAvatar";
 import MyCollectionItemDetail from "./components/MyNFT/MyCollectionItemDetail";
 import MyCollectionItemSell from "./components/MyNFT/MyCollectionItemSell";
 import "antd/dist/antd.css";
+import MarketPlaceItemBuy from "./components/MarketPlace/MarketPlaceItemBuy";
+import MarketPlaceItemDetail from "./components/MarketPlace/MarketPlaceItemDetail";
 
 function App() {
     return (
@@ -24,12 +26,18 @@ function App() {
                         <Route path="/" element={<Main />}></Route>
                         <Route path="/MyNFT" element={<MyNFT />}></Route>
                         <Route path="/Create" element={<Create />}></Route>
-
                         <Route
                             path="/MarketPlace"
                             element={<MarketPlace />}></Route>
                         <Route
-                            path="/LoginMeta"
+                            path="/MarketPlace/:id"
+                            element={<MarketPlaceItemDetail />}></Route>
+                        <Route
+                            path="/MarketPlace/:id/Buy"
+                            element={<MarketPlaceItemBuy />}></Route>
+
+                        <Route
+                            path="/LoginMeta" 
                             element={<LoginMeta />}></Route>
 
                         <Route path="/SellingNFT" element={<Selling />}></Route>

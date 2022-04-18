@@ -49,7 +49,7 @@ contract MarketPlace{
         offeringRegistry[_offeringId].closed = true;
         balances[offeringRegistry[_offeringId].offerer] += msg.value;
         emit OfferingClosed(_offeringId, msg.sender);
-    } 
+    }
 
     function withdrawBalance() external {
         require(balances[msg.sender] > 0,"You don't have any balance to withdraw");
