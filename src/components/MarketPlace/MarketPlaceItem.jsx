@@ -1,11 +1,23 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import './MarketPlaceitemCss/itemcard.css'
+
 
 function MarketPlaceItem(props) {
+
+    function Hoverevent(event){
+       
+        event.target.style.transform="translateY( -5px)"
+    }
+    function HoverOutevent(event){
+      
+        event.target.style.transform="translateY( 5px)" 
+    }
+
     const renderItems = () =>
         props.products &&
         props.products.map((product) => (
-            <div key={product.id}>
+            <div key={product.id} className="card">
                 <NavLink to={`/MarketPlace/${product.id}`}>
                     <img src={product.imageURI} />
                 </NavLink>
@@ -20,7 +32,12 @@ function MarketPlaceItem(props) {
             </div>
         ));
 
-    return console.log(props.products), renderItems();
+    return( 
+        <div className="card-wrapper" >
+            { renderItems()}
+        </div>
+        
+    );
 }
 
 export default MarketPlaceItem;

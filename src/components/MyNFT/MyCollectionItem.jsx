@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import './MyNFTcss/itemcard.css'
+
+
 
 function MyCollectionItem(props) {
+
+
     const renderItems = () =>
+      
+
         props.products &&
         props.products.map((product) => (
-            <div key={product.id}>
+
+            <div key={product.id} className="card">
                 <NavLink to={`/MyCollection/${product.id}`}>
                     <img src={product.imageURI} />
                 </NavLink>
@@ -18,7 +26,11 @@ function MyCollectionItem(props) {
             </div>
         ));
 
-    return console.log(props.products), renderItems();
+    return(
+        <div className="card-wrapper" >
+        { renderItems()}
+         </div>
+    ) 
 }
 
 export default MyCollectionItem;
