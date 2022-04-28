@@ -14,6 +14,7 @@ function MarketPlaceItem(props) {
     }
 
     const renderItems = () =>
+      
         props.products &&
         props.products.map((product) => (
             <div key={product.id} className="card">

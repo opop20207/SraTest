@@ -111,42 +111,50 @@ function CreateNft() {
     }
 
     return (
-        <div class="container">
+        <>
             <h1>Mint NFT</h1>
 
             <div class="mb-3">
                 <div class="form-group">
-                    <div class="input-group mb-3">
-                        <input
-                            id="name"
-                            type="text"
-                            class="form-control"
-                            placeholder="NFT Name"
-                            aria-label="URL"
-                            aria-describedby="basic-addon1"
-                        />
+                   
+                   <div className="imgcontent">
+                        <img id="preview-image" />
+                   
+                        <div class="input-group mb-3">
+                            <input
+                                type="file"
+                                name="file"
+                                id="file"
+                                class="inputfile"
+                                onChange={readImage}
+                            /> <label for="file">Choose a file</label>
+                           
+                        </div>
+                   </div>
+                   
+                    <div className="inputContent">
+                        <div class="input-group mb-3">
+                            <input
+                                id="name"
+                                type="text"
+                                class="form-control"
+                                placeholder="NFT Name"
+                                aria-label="URL"
+                                aria-describedby="basic-addon1"
+                            />
+                        </div>
+                        <div class="input-group mb-3">
+                            <input
+                                id="description"
+                                type="text"
+                                class="form-control"
+                                placeholder="Description"
+                                aria-label="URL"
+                                aria-describedby="basic-addon1"
+                            />
+                        </div>
                     </div>
-                    <div class="input-group mb-3">
-                        <input
-                            id="description"
-                            type="text"
-                            class="form-control"
-                            placeholder="Description"
-                            aria-label="URL"
-                            aria-describedby="basic-addon1"
-                        />
-                    </div>
-                    <img id="preview-image" />
-                    <div class="input-group mb-3">
-                        <input
-                            type="file"
-                            name="file"
-                            id="file"
-                            class="inputfile"
-                            onChange={readImage}
-                        />
-                        <label for="file">Choose a file</label>
-                    </div>
+                  
                 </div>
                 <div>
                     <button
@@ -159,7 +167,7 @@ function CreateNft() {
 
                 <div class="input-group mb-3" id="resultSpace"></div>
             </div>
-        </div>
+        </>
     );
 }
 

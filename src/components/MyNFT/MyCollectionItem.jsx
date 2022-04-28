@@ -8,8 +8,6 @@ function MyCollectionItem(props) {
 
     const renderItems = () =>
 
- 
-      
 
         props.products &&
         props.products.map((product) => (
