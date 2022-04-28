@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import './MyNFTcss/itemcard.css'
-
+import '../../static/css/itemcard.css'
 
 
 function MyCollectionItem(props) {
 
 
     const renderItems = () =>
+
+ 
       
 
         props.products &&
@@ -15,20 +16,28 @@ function MyCollectionItem(props) {
 
             <div key={product.id} className="card">
                 <NavLink to={`/MyCollection/${product.id}`}>
-                    <img src={product.imageURI} />
-                </NavLink>
-                <div id="content">
-                    <p id="title">{product.name}</p>
-                    <div id="aligncontent">
-                        <p id="price">{product.description}</p>
-                    </div>
+                
+                <div  className="imgcontent">
+                 <img src={product.imageURI} />
                 </div>
+                
+
+                <div id="cardContent">
+                    <p id="title">{product.name}</p>
+                        
+                        <p id="price">{product.description}</p>
+                        
+                </div>
+                    
+                </NavLink>
+               
             </div>
         ));
 
     return(
         <div className="card-wrapper" >
-        { renderItems()}
+             { renderItems()}
+             
          </div>
     ) 
 }

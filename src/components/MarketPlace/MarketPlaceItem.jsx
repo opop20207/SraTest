@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import './MarketPlaceitemCss/itemcard.css'
-
+import '../../static/css/itemcard.css'
 
 function MarketPlaceItem(props) {
 
@@ -19,7 +18,7 @@ function MarketPlaceItem(props) {
         props.products.map((product) => (
             <div key={product.id} className="card">
                 <NavLink to={`/MarketPlace/${product.id}`}>
-                    <img src={product.imageURI} />
+                    <img className="imgcontent" src={product.imageURI} />
                 </NavLink>
                 <div id="content">
                     <p id="title">{product.name}</p>

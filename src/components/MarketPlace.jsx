@@ -51,9 +51,9 @@ function MarketPlace(){
         <div class="temp">
             <p>MarketPlace</p>
             {Loading ? <strong>Loading...</strong> : null}
-            <div id="NFTLists" class="container">
-                <MarketPlaceItem products={products} />
-            </div>
+          
+            <MarketPlaceItem products={products} />
+            
         </div>
     );
 }

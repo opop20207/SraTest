@@ -4,6 +4,13 @@ import Web3 from "web3";
 import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
 import MyCollectionItem from "./MyCollectionItem";
 
+const styles ={
+    wrapbody: {
+   
+    justifyContent: "left"
+    }
+}
+
 function MyCollection() {
     const { authenticate, Moralis, isAuthenticated, user, refetchUserData } =
         useMoralis();
@@ -49,11 +56,12 @@ function MyCollection() {
 
     return (
         <div class="temp">
-            <p>MyCollecion</p>
+            <h2>MyCollecion</h2>
+   
             {Loading ? <strong>Loading...</strong> : null}
-            <div id="NFTLists" class="container">
-                <MyCollectionItem products={products} />
-            </div>
+          
+            <MyCollectionItem products={products} />
+            
         </div>
     );
 }
