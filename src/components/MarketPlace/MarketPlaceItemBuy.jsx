@@ -1,3 +1,5 @@
+/* global BigInt */
+
 import { useMoralis } from "react-moralis";
 import { useParams, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -7,19 +9,21 @@ import MarketPlaceItem from "./MarketPlaceItem";
 
 function MarketPlaceItemBuy() {
     const { authenticate, Moralis, isAuthenticated } = useMoralis();
-    const nft_contract_address = "0xa18c119ae67cc47c37873efadddbe74398477acd"; 
-    const [products, setproducts] = useState([]);
-    const [Loading, setLoading] = useState(true);
+    const nft_contract_address = "0x3d05364012a5f131e3a32a68deba6c23041fb917";
+    const nft_market_place_address = "0xf3c3fce5be43fe2f56a08478455f39dcb8251dd4";
     const { walletAddress } = useMoralisDapp();
     const { id } = useParams();
-    const [nft, setNft] = useState();
+    const [nftprice, setNftprice] = useState();
+    const [nftid, setNftid] = useState("");
+    const [nftobjectid, setNftobjectid] = useState("");
+    const [nft, setNft] = useState("");
     const [tokenId, setTokenId] = useState(null);
     const [contractAddress, setContractaddress] = useState(null);
     const web3 = new Web3(window.ethereum);
 
     useEffect(() => {
         if (!walletAddress) return;
-        console.log("MarketPlaceItem Executed!! : ", id);
+        console.log("MarketPlaceItemBuy Executed!! : ", id);
         getNFTs().then((response) => {
             setNft(response);
         });
@@ -37,8 +41,13 @@ function MarketPlaceItemBuy() {
             offerBy: data[0].get("offerBy"),
             price: data[0].get("price"),
             tx: data[0].get("tx"),
+            offeringId: data[0].get("offeringId"),
+            objectId: data[0].get("nftobjectId"),
         };
-
+        setNftprice(data[0].get("price"));
+        setNftid(data[0].get("offeringId"));
+        setNftobjectid(data[0].get("nftobjectId"));
+    
         const receipt = await web3.eth.getTransactionReceipt(data[0].get("tx"));
         if (receipt == null) {
             setTokenId(null);
@@ -52,38 +61,91 @@ function MarketPlaceItemBuy() {
     //Buy NFT Funtions
 
     async function buyNFT(context) {
-        // const offeringId = context.parentElement.parentElement.id;
-        // let offering = window.offeringArray.find(
-        //     (object) => object.offeringId == offeringId
-        // );
-        // const price = Moralis.Units.ETH(offering.price);
-        // const priceHexString = BigInt(price).toString(16);
-        // closedOffering = await closeOffering(offeringId, priceHexString);
-        // const tx_closeOffering = `<p> Buying transaction ${closedOffering}</p>`;
-        // context.parentElement.innerHTML = tx_closeOffering;
+        console.log("BuyNFT Started... ");
+        console.log("offering price is ... ", nftprice);
+        console.log("offering ID is ... ", nftid);
+
+        const offeringId = nftid;
+        const price = Moralis.Units.ETH(nftprice);
+        const priceHexString = BigInt(price).toString(16);
+
+        console.log("offeringId is :", offeringId, "price is ", price, "and Hex is ", priceHexString);
+        const closedOffering = await closeOffering(offeringId, priceHexString);
+        const tx_closeOffering = `<p> Buying transaction ${closedOffering}</p>`;
+        console.log("closedOffering is ... ", closedOffering);
+
+        await changeOwner();
+        await destroyNFT();
+        // const tx_destroyNFT = await destroyNFT();
+        // console.log("destroyNFT result -> ", tx_destroyNFT);
     }
 
     async function closeOffering(offeringId, priceEncoded) {
-        // const encodedFunction = web3.eth.abi.encodeFunctionCall(
-        //     {
-        //         name: "closeOffering",
-        //         type: "function",
-        //         inputs: [{ type: "bytes32", name: "_offeringId" }],
-        //     },
-        //     [offeringId]
-        // );
+        const encodedFunction = web3.eth.abi.encodeFunctionCall(
+            {
+                name: "closeOffering",
+                type: "function",
+                inputs: [{ type: "bytes32", name: "_offeringId" }],
+            },
+            [offeringId]
+        );
 
-        // const transactionParameters = {
-        //     to: nft_market_place_address,
-        //     from: window.ethereum.selectedAddress,
-        //     value: priceEncoded,
-        //     data: encodedFunction,
-        // };
-        // const txt = await window.ethereum.request({
-        //     method: "eth_sendTransaction",
-        //     params: [transactionParameters],
-        // });
-        // return txt;
+        const transactionParameters = {
+            to: nft_market_place_address,
+            from: window.ethereum.selectedAddress,
+            value: priceEncoded,
+            data: encodedFunction,
+        };
+        const txt = await window.ethereum.request({
+            method: "eth_sendTransaction",
+            params: [transactionParameters],
+        });
+        return txt;
+    }
+
+    async function changeOwner(){
+        /*
+        changeOwner(void)
+        해당 NFTs의 소유권을 현재 지갑 주소 주인으로 옮깁니다. 
+        */
+        console.log("changeOwner executed.. ");
+
+        const queryNFTs = new Moralis.Query("NFTs");
+        queryNFTs.equalTo("objectId", nftobjectid);
+
+        console.log("objectId is .. ", nftobjectid);
+
+        console.log("ChangeOwner test.. ", queryNFTs);
+        const changeObject = await queryNFTs.first();
+
+        console.log("ChangeOwner test.. ", changeObject);
+
+        changeObject.set("ownerOf", walletAddress);
+        await changeObject.save();
+    }
+
+    async function destroyNFT() {
+        /*
+        destroyNFT()
+        : Moralis Offerings DB에서 해당 NFT를 제거합니다. (거래가 완료되었기 때문)
+        */
+        const queryNFTs = new Moralis.Query("Offerings");
+        queryNFTs.equalTo("nftobjectId", nftobjectid);
+        const deleteObject = await queryNFTs.first();
+        
+        if(deleteObject){
+            deleteObject.destroy().then(
+                (myObject) => {
+                  // The object was deleted from the Moralis Cloud.
+                  return myObject;
+                },
+                (error) => {
+                  // The delete failed.
+                  // error is a Moralis.Error with an error code and message.
+                  return error;
+                }
+            );
+        }
     }
 
     if (tokenId != null) {

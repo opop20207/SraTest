@@ -7,7 +7,8 @@ import MyCollectionItem from "./MyCollectionItem";
 
 function MyCollectionItemSell() {
     const { authenticate, Moralis, isAuthenticated } = useMoralis();
-    const nft_contract_address = "0xa18c119ae67cc47c37873efadddbe74398477acd"; 
+    const nft_contract_address = "0x3d05364012a5f131e3a32a68deba6c23041fb917"; 
+    const OP_gateway_address = "0xA18c119ae67cc47C37873EFaDDdBe74398477aCD";
     const [products, setproducts] = useState([]);
     const [Loading, setLoading] = useState(true);
     const { walletAddress } = useMoralisDapp();
@@ -18,7 +19,7 @@ function MyCollectionItemSell() {
     const web3 = new Web3(window.ethereum);
 
     const nft_market_place_address = "0xf3c3fce5be43fe2f56a08478455f39dcb8251dd4";
-    const coordinatorKey = "05a02c2b6f9d99768be59c621a763f941a7933764188c265083be7dbfa987b41";
+    const coordinatorKey = "0x1783aa931119a96ef90e60d1b8cacdb2294a8d83a3b610459d980e8166c63cf1";
     const nft_market_place_abi = [{"inputs": [{"internalType": "address", "name": "_operator", "type": "address"}], "stateMutability": "nonpayable", "type": "constructor", "name": "constructor"}, {"anonymous": false, "inputs": [{"indexed": true, "internalType": "address", "name": "beneficiary", "type": "address"}, {"indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256"}], "name": "BalanceWithdrawn", "type": "event"}, {"anonymous": false, "inputs": [{"indexed": true, "internalType": "bytes32", "name": "offeringId", "type": "bytes32"}, {"indexed": true, "internalType": "address", "name": "buyer", "type": "address"}], "name": "OfferingClosed", "type": "event"}, {"anonymous": false, "inputs": [{"indexed": true, "internalType": "bytes32", "name": "offeringId", "type": "bytes32"}, {"indexed": true, "internalType": "address", "name": "hostContract", "type": "address"}, {"indexed": true, "internalType": "address", "name": "offerer", "type": "address"}, {"indexed": false, "internalType": "uint256", "name": "tokenId", "type": "uint256"}, {"indexed": false, "internalType": "uint256", "name": "price", "type": "uint256"}, {"indexed": false, "internalType": "string", "name": "uri", "type": "string"}], "name": "OfferingPlaced", "type": "event"}, {"anonymous": false, "inputs": [{"indexed": false, "internalType": "address", "name": "previousOperator", "type": "address"}, {"indexed": false, "internalType": "address", "name": "newOperator", "type": "address"}], "name": "OperatorChanged", "type": "event"}, {"inputs": [{"internalType": "address", "name": "_newOperator", "type": "address"}], "name": "changeOperator", "outputs": [], "stateMutability": "nonpayable", "type": "function"}, {"inputs": [{"internalType": "bytes32", "name": "_offeringId", "type": "bytes32"}], "name": "closeOffering", "outputs": [], "stateMutability": "payable", "type": "function"}, {"inputs": [{"internalType": "address", "name": "_offerer", "type": "address"}, {"internalType": "address", "name": "_hostContract", "type": "address"}, {"internalType": "uint256", "name": "_tokenId", "type": "uint256"}, {"internalType": "uint256", "name": "_price", "type": "uint256"}], "name": "placeOffering", "outputs": [], "stateMutability": "nonpayable", "type": "function"}, {"inputs": [{"internalType": "address", "name": "_address", "type": "address"}], "name": "viewBalances", "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}], "stateMutability": "view", "type": "function"}, {"inputs": [{"internalType": "bytes32", "name": "_offeringId", "type": "bytes32"}], "name": "viewOfferingNFT", "outputs": [{"internalType": "address", "name": "", "type": "address"}, {"internalType": "uint256", "name": "", "type": "uint256"}, {"internalType": "uint256", "name": "", "type": "uint256"}, {"internalType": "bool", "name": "", "type": "bool"}], "stateMutability": "view", "type": "function"}, {"inputs": [], "name": "withdrawBalance", "outputs": [], "stateMutability": "nonpayable", "type": "function"}];
     const marketPlace = new web3.eth.Contract(nft_market_place_abi,nft_market_place_address);
 
@@ -61,8 +62,12 @@ function MyCollectionItemSell() {
         const approval = await approveMarketPlace(contractAddress, tokenId);
         const tx_approval = `<p> Approval transaction ${approval}</p>`;
         console.log("Approval transaction hash : ", tx_approval);
-        // const offering = await placeOffering(contractAddress, tokenId, price);
-        // console.log("Offering transaction hash : ", offering);
+        const offering = await placeOffering(contractAddress, tokenId, price);
+        console.log("Offering transaction hash : ", offering);
+
+        //console.log("4. log[0].topics[0]", offering["logs"][0]["topics"][0]);
+
+        const offeringId = offering["logs"][0]["topics"][1];
 
         const savedData = new Moralis.Object("Offerings");
         savedData.set("name", nft.name);
@@ -74,6 +79,8 @@ function MyCollectionItemSell() {
         savedData.set("price", price);
         savedData.set("imageURI", nft.imageURI);
         savedData.set("tx", nft.tx);
+        savedData.set("offeringId", offeringId);
+        savedData.set("nftobjectId", id);
 
         await savedData.save();
     }
@@ -88,7 +95,7 @@ function MyCollectionItemSell() {
                     { type: "uint256", name: "tokenURI" },
                 ],
             },
-            [nft_contract_address, tokenId]
+            [nft_market_place_address, tokenId]
         );
 
         const transactionParameters = {
@@ -104,46 +111,49 @@ function MyCollectionItemSell() {
     }
 
     async function placeOffering(_hostContract, _tokenId, _price) {
-        // const params = {
-        //     hostContract: _hostContract,
-        //     offerer: window.ethereum.selectedAddress,
-        //     tokenId: _tokenId,
-        //     price: _price,
-        // };
-        // const signedTransaction = await _placeOffering(params);
-        // const fulfillTx = await web3.eth.sendSignedTransaction(
-        //     signedTransaction.rawTransaction
-        // );
-        // return fulfillTx;
+        const params = {
+            hostContract: _hostContract,
+            offerer: window.ethereum.selectedAddress,
+            tokenId: _tokenId,
+            price: _price,
+        };
+        const signedTransaction = await _placeOffering(params);
+        const fulfillTx = await web3.eth.sendSignedTransaction(
+            signedTransaction.rawTransaction
+        );
+        return fulfillTx;
     }
 
     async function _placeOffering(params)
     {
-        // console.log("_placeOffering() Executed!");
-        // const hostContract = params.hostContract;
-        // const offerer = params.offerer;
-        // const tokenId = params.tokenId;
-        // const price = params.price;
-        // const nonceOperator = web3.eth.getTransactionCount(nft_market_place_address);
-        // const functionCall = marketPlace.methods.placeOffering(offerer,hostContract,tokenId,web3.utils.toWei(price,"ether")).encodeABI();
-        // const transactionBody = {
-        //     to: nft_market_place_address,
-        //       nonce:nonceOperator,
-        //       data:functionCall,
-        //       gas:400000,
-        //       gasPrice:web3.utils.toWei("1", "gwei")
-        // }
+        console.log("_placeOffering() Executed!");
+        console.log("chainId checking... ", web3.eth.net.getId());
 
-        // console.log(" ** nonceOperator is ....");
-        // console.log(nonceOperator);
-        // console.log("trasactionBody is.. ");
-        // console.log(transactionBody);
-        // console.log("coordinatorKey is.. ");
-        // console.log(coordinatorKey);
-        // const signedTransaction = await web3.eth.accounts.signTransaction(transactionBody, coordinatorKey);
-        // console.log("_placeOffering() Ended!, signedTransaction is ...");
-        // console.log(signedTransaction);
-        // return signedTransaction;
+        const hostContract = params.hostContract;
+        const offerer = params.offerer;
+        const tokenId = params.tokenId;
+        const price = params.price;
+        const nonceOperator = web3.eth.getTransactionCount(nft_market_place_address);
+        const functionCall = marketPlace.methods.placeOffering(offerer,hostContract,tokenId,web3.utils.toWei(price,"ether")).encodeABI();
+        const transactionBody = {
+            to: nft_market_place_address,
+              //nonce:nonceOperator,
+              data:functionCall,
+              gas:400000,
+              //gasPrice:web3.utils.toWei("100000", "gwei")
+        }
+
+        console.log(" ** nonceOperator is ....");
+        console.log(nonceOperator);
+        console.log("trasactionBody is.. ");
+        console.log(transactionBody);
+        console.log("coordinatorKey is.. ");
+        console.log(coordinatorKey);
+        const signedTransaction = await web3.eth.accounts.signTransaction(transactionBody, coordinatorKey);
+        console.log("_placeOffering() Ended!, signedTransaction is ...");
+        console.log(signedTransaction);
+
+        return signedTransaction;
     }    
 
     if (tokenId != null) {
