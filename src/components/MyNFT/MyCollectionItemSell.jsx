@@ -58,12 +58,16 @@ function MyCollectionItemSell() {
     async function offerNFT() {
         const price = document.getElementById("price").value;
 
+        await notify("Approval 진행 중..");
         console.log("contractAddress : ", contractAddress, " and tokenID : ", tokenId);
         const approval = await approveMarketPlace(contractAddress, tokenId);
         const tx_approval = `<p> Approval transaction ${approval}</p>`;
+        await notify("Approval 진행 완료! placeOffering 진행 중..");
+
         console.log("Approval transaction hash : ", tx_approval);
         const offering = await placeOffering(contractAddress, tokenId, price);
         console.log("Offering transaction hash : ", offering);
+        await notify("placeOffering 진행 완료! Moralis DB Update 진행 중..");
 
         //console.log("4. log[0].topics[0]", offering["logs"][0]["topics"][0]);
 
@@ -83,6 +87,7 @@ function MyCollectionItemSell() {
         savedData.set("nftobjectId", id);
 
         await savedData.save();
+        await notify("Transaction 완료!");
     }
     
     async function approveMarketPlace(hostContract, tokenId) {
@@ -156,6 +161,11 @@ function MyCollectionItemSell() {
         return signedTransaction;
     }    
 
+    async function notify(_txt) {
+        const notifydiv = document.getElementById("resultSpace");
+        notifydiv.innerHTML = `<input disabled = "true" id="result" type="text" class="form-control" placeholder="Description" aria-label="URL" aria-describedby="basic-addon1" value="${_txt}">`;
+    }
+
     if (tokenId != null) {
         return (
             <>
@@ -171,6 +181,9 @@ function MyCollectionItemSell() {
                     aria-describedby="basic-addon1"
                 />
                 <button onClick={offerNFT}>판매하기</button>
+                <div id="resultSpace">
+                    <input disabled = "true" id="result" type="text" class="form-control" placeholder="Description" aria-label="URL" aria-describedby="basic-addon1" value="Transaction 진행 이전"></input>
+                </div>
             </>
         );
     } else {

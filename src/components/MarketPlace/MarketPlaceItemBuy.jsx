@@ -69,15 +69,21 @@ function MarketPlaceItemBuy() {
         const price = Moralis.Units.ETH(nftprice);
         const priceHexString = BigInt(price).toString(16);
 
+        await notify("closeOffering 진행 중..");
+
         console.log("offeringId is :", offeringId, "price is ", price, "and Hex is ", priceHexString);
         const closedOffering = await closeOffering(offeringId, priceHexString);
         const tx_closeOffering = `<p> Buying transaction ${closedOffering}</p>`;
         console.log("closedOffering is ... ", closedOffering);
 
+        await notify("closeOffering 진행 완료! DB 수정중...");
+
         await changeOwner();
         await destroyNFT();
         // const tx_destroyNFT = await destroyNFT();
         // console.log("destroyNFT result -> ", tx_destroyNFT);
+
+        await notify("Transaction 완료! (반영에 시간이 걸릴 수 있습니다. MetaMask 참조)");
     }
 
     async function closeOffering(offeringId, priceEncoded) {
@@ -148,6 +154,11 @@ function MarketPlaceItemBuy() {
         }
     }
 
+    async function notify(_txt) {
+        const notifydiv = document.getElementById("resultSpace");
+        notifydiv.innerHTML = `<input disabled = "true" id="result" type="text" class="form-control" placeholder="Description" aria-label="URL" aria-describedby="basic-addon1" value="${_txt}">`;
+    }
+
     if (tokenId != null) {
         return (
             <>
@@ -155,6 +166,9 @@ function MarketPlaceItemBuy() {
                 <p>itemDetailPage item ID : {id}</p>
                 <img src={nft?.imageURI} />
                 <button onClick={buyNFT}>구매하기</button>
+                <div id="resultSpace">
+                    <input disabled = "true" id="result" type="text" class="form-control" placeholder="Description" aria-label="URL" aria-describedby="basic-addon1" value="Transaction 진행 이전"></input>
+                </div>
             </>
         );
     } else {
