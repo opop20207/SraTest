@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Menu, { SubMenu, Item as MenuItem, Divider } from "rc-menu";
 import "rc-menu/assets/index.css";
 import Account from "../components/Account";
+import Withdrawal from "../components/Withdrawal";
 
 function Header() {
 
@@ -70,6 +71,10 @@ function Header() {
                                 </Link>
                             </MenuItem>
                         </Menu>
+                    </div>
+
+                    <div class="withdrawContainer">
+                        <Withdrawal />
                     </div>
 
                     <div class="loginContainer">

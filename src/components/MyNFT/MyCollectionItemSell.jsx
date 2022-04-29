@@ -122,6 +122,9 @@ function MyCollectionItemSell() {
             tokenId: _tokenId,
             price: _price,
         };
+
+        console.log("@@ placeOffering params => ", params);
+
         const signedTransaction = await _placeOffering(params);
         const fulfillTx = await web3.eth.sendSignedTransaction(
             signedTransaction.rawTransaction
