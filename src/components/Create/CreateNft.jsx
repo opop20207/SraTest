@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ThemeProvider } from "react-bootstrap";
 import { useMoralis } from "react-moralis";
 import Web3 from "web3";
@@ -9,6 +10,8 @@ function CreateNft() {
     const nft_contract_address = "0x3d05364012a5f131e3a32a68deba6c23041fb917"; //NFT Minting Contract Use This One "Batteries Included", code of this contract is in the github repository under contract_base for your reference.
     const web3 = new Web3(Web3.givenProvider);
     const { walletAddress } = useMoralisDapp();
+    const [ preImage , setpreImage] = useState("");
+    const [hoverImg , sethoverImg] = useState("visible");
 
     async function upload() {
         const fileInput = document.getElementById("file");
@@ -84,20 +87,25 @@ function CreateNft() {
     }
 
     function readImage(e) {
-        console.log("ghcnfdhlsk");
-        // 인풋 태그에 파일이 있는 경우
-
-        console.log(e.target);
-        // 이미지 파일인지 검사 (생략)
-        // FileReader 인스턴스 생성
+        
         const reader = new FileReader();
+        const previewImage = document.getElementById("preview-image");
+       
         // 이미지가 로드가 된 경우
-        reader.onload = (e) => {
-            const previewImage = document.getElementById("preview-image");
-            previewImage.src = e.target.result;
-        };
-        // reader가 이미지 읽도록 하기
-        reader.readAsDataURL(e.target.files[0]);
+        if(e.target.files && e.target.files[0]){
+        
+            reader.onload = (e) => {
+          
+               // previewImage.src = e.target.result;
+                setpreImage(e.target.result);
+                sethoverImg("hidden")
+            };
+            // reader가 이미지 읽도록 하기
+            reader.readAsDataURL(e.target.files[0]);
+        }
+        else{
+            previewImage.src = "";
+        }
     }
     // input file에 change 이벤트 부여
 
@@ -110,6 +118,13 @@ function CreateNft() {
         );
     }
 
+    function hoverInenvet () {
+       if( preImage !=""){ sethoverImg("visible")}
+    }
+    function hoverOutenvet () {
+       if(preImage != "") { sethoverImg("hidden") }
+    }
+
     return (
         <>
             <h1>Mint NFT</h1>
@@ -118,8 +133,7 @@ function CreateNft() {
                 <div class="form-group">
                    
                    <div className="imgcontent">
-                        <img id="preview-image" />
-                   
+                      
                         <div class="input-group mb-3">
                             <input
                                 type="file"
@@ -127,7 +141,21 @@ function CreateNft() {
                                 id="file"
                                 class="inputfile"
                                 onChange={readImage}
-                            /> <label for="file">Choose a file</label>
+                            /> 
+                            <label className="wrap_preview" for="file"  onMouseOver={ () => hoverInenvet()} onMouseOut = { () => hoverOutenvet()}>
+                                
+                                <div className="preview_image">
+                                { preImage != "" ?  <img  id="preview-image" src = { preImage} /> :  "" }
+                                </div>
+                         
+                                <div className="default_image">
+
+                                <img style ={{visibility: hoverImg }} src = {process.env.PUBLIC_URL + '/imgs/picture_icon.png'}/>
+                             
+                               
+                                </div>
+                              
+                            </label>
                            
                         </div>
                    </div>
@@ -160,7 +188,8 @@ function CreateNft() {
                     <button
                         class="btn btn-primary"
                         id="upload"
-                        onClick={upload}>
+                        onClick={upload}
+                       >
                         Upload and Mint
                     </button>
                 </div>
