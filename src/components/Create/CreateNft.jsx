@@ -127,14 +127,15 @@ function CreateNft() {
 
     return (
         <>
-            <h1>Mint NFT</h1>
+            
 
             <div class="mb-3">
+                <h2 className="pageName">스킨 NFT Create</h2>
                 <div class="form-group">
                    
                    <div className="imgcontent">
                       
-                        <div class="input-group mb-3">
+                        <div >
                             <input
                                 type="file"
                                 name="file"
@@ -161,40 +162,57 @@ function CreateNft() {
                    </div>
                    
                     <div className="inputContent">
-                        <div class="input-group mb-3">
+                        <div>
                             <input
                                 id="name"
                                 type="text"
-                                class="form-control"
+                                class="form-control form-control-lg"
                                 placeholder="NFT Name"
                                 aria-label="URL"
                                 aria-describedby="basic-addon1"
+                              
                             />
                         </div>
-                        <div class="input-group mb-3">
-                            <input
-                                id="description"
-                                type="text"
-                                class="form-control"
-                                placeholder="Description"
-                                aria-label="URL"
-                                aria-describedby="basic-addon1"
-                            />
+                        <div >
+                    
+                            <textarea
+                             id="description"
+                             type="text"
+                             class="form-control"
+                             placeholder="Description"
+                             rows={10}/>
+
                         </div>
+
+                        <div>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                            </select>
+                        </div>
+
+                        <div >
+                    
+                        <button
+                            class="btn btn-primary"
+                            id="upload"
+                            onClick={upload}
+                        >
+                            Upload and Mint
+                         </button>
+                        </div>
+
+                        
                     </div>
+
+                  
                   
                 </div>
-                <div>
-                    <button
-                        class="btn btn-primary"
-                        id="upload"
-                        onClick={upload}
-                       >
-                        Upload and Mint
-                    </button>
-                </div>
+              
 
-                <div class="input-group mb-3" id="resultSpace"></div>
+             
             </div>
         </>
     );
