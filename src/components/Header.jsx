@@ -12,14 +12,14 @@ function Header() {
             <nav>
                 <div class="UpperNav">
                     <div class="navContainer">
-                        <Menu mode="horizontal">
-                            <MenuItem key="CLone.ns">
+                        <Menu style={{padding: "0px" , backgroundColor: "white"}} mode="horizontal">
+                            <MenuItem  style={{padding: "0px" , backgroundColor: "white"}} key="CLone.ns">
                                 <Link to={"/"}>
-                                    <span>CLone.ns</span>
+                                    <span><img style={{width : '200px' , height: '100%'}} src= { process.env.PUBLIC_URL+"/imgs/clone.ns.logo.jpg"}/></span>
                                 </Link>
                             </MenuItem>
 
-                            <MenuItem key="MarketPlace">
+                            <MenuItem style={{ backgroundColor: "white"}} key="MarketPlace">
                                 <Link to={"/MarketPlace"}>
                                     <span>MarketPlace</span>
                                 </Link>
@@ -28,8 +28,8 @@ function Header() {
                             <SubMenu
                                 title={<span>My NFT</span>}
                                 key="MyNFT"
-                                style={{ color: "black" }}>
-                                <MenuItem key="MyNFT-SellingNFT">
+                                style={{ color: "black" ,  backgroundColor: "white"}}>
+                                <MenuItem  key="MyNFT-SellingNFT">
                                     <Link to={"/SellingNFT"} style={{textDecoration:'none'}}>
                                         <span
                                             style={{
@@ -65,7 +65,7 @@ function Header() {
                                 </MenuItem>
                             </SubMenu>
 
-                            <MenuItem key="Create">
+                            <MenuItem style={{ backgroundColor: "white"}} key="Create">
                                 <Link to={"/Create"}>
                                     <span>Create</span>
                                 </Link>
@@ -73,13 +73,28 @@ function Header() {
                         </Menu>
                     </div>
 
-                    <div class="withdrawContainer">
-                        <Withdrawal />
+                    <div className="personal_settings">
+                        <div class="withdrawContainer">
+                           
+                            <Menu style={{padding: "0px" , backgroundColor: "white"}} mode="horizontal">
+                                <MenuItem style={{ backgroundColor: "white"}}>
+                                <Withdrawal />
+                                </MenuItem>
+                            </Menu>
+                        </div>
+                       
+
+                        <div class="loginContainer">
+                            <Menu style={{padding: "0px" , backgroundColor: "white"}} mode="horizontal">
+                                <MenuItem style={{ backgroundColor: "white"}}>
+                                <Account />
+                                </MenuItem>
+                            </Menu>
+                          
+                        </div>
                     </div>
 
-                    <div class="loginContainer">
-                        <Account />
-                    </div>
+             
                 </div>
             </nav>
         </>

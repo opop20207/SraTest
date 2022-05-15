@@ -6,7 +6,7 @@ import { Button, Card, Modal } from "antd";
 
 const styles = {
     account: {
-        height: "42px",
+        height: "50px",
         padding: "0 15px",
         justifyContent: "center",
         alignItems: "center",
@@ -79,7 +79,7 @@ function Withdrawal() {
         <>
             <div style={styles.account} onClick={() => setIsModalVisible(true)}>
                 <div style={{ marginRight: "0px", ...styles.text }}>
-                    {"잔고 확인하기"}
+                    <p>Wallet<br/>Balance</p>
                 </div>
             </div>
             <Modal
