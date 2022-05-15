@@ -7,12 +7,11 @@ import { Button, Card, Modal } from "antd";
 const styles = {
     account: {
         height: "50px",
-        padding: "0 15px",
+        width: "50px",
+        display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        width: "fit-content",
-        borderRadius: "12px",
-        backgroundColor: "rgb(244, 244, 244)",
+        borderRadius: "12px", 
         cursor: "pointer",
     },
     text: {
@@ -70,7 +69,7 @@ function Withdrawal() {
                 onClick={() =>
                     authenticate({ signingMessage: "Hello World!" })
                 }>
-                <p style={styles.text}>Authenticate</p>
+                 <img style={{width : '30px' , height: '30px'}} src= { process.env.PUBLIC_URL+"/imgs/wallet_icon.png"}/>
             </div>
         );
     }
@@ -79,7 +78,7 @@ function Withdrawal() {
         <>
             <div style={styles.account} onClick={() => setIsModalVisible(true)}>
                 <div style={{ marginRight: "0px", ...styles.text }}>
-                    <p>Wallet<br/>Balance</p>
+                <img style={{width : '30px' , height: '30px'}} src= { process.env.PUBLIC_URL+"/imgs/wallet_icon.png"}/>
                 </div>
             </div>
             <Modal

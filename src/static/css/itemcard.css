@@ -25,9 +25,7 @@
     transform: translateY(-5px);
 }
 
-.cardContent{
-    
-}
+
 
 .imgcontent img{
    
@@ -36,5 +34,4 @@
     object-fit:contain;
   
 }
-
 
