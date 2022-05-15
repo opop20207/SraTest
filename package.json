@@ -24,6 +24,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "4.0.3",
     "react-slick": "^0.29.0",
+    "skinview3d": "^2.2.1",
     "slick-carousel": "^1.8.1",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",

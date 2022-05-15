@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import '../../static/css/itemcard.css'
+import SkinView3d from '../../hooks/SkinView3d';
 
 
 function MyCollectionItem(props) {
@@ -16,7 +17,9 @@ function MyCollectionItem(props) {
                 <NavLink to={`/MyCollection/${product.id}`}>
                 
                 <div  className="imgcontent">
-                 <img src={product.imageURI} />
+                 {/* <img src={product.imageURI} /> */}
+                 
+                 <SkinView3d imgLink={product.imageURI} />
                 </div>
                 
 
