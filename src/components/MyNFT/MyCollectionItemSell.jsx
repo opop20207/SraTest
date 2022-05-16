@@ -3,21 +3,22 @@ import { useParams, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Web3 from "web3";
 import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
+import useMoralisProvider from "../../hooks/useMoralisProvider";
+import useNFTInfoProvider from "../../hooks/useNFTInfoProvider";
 
 function MyCollectionItemSell() {
     const { Moralis } = useMoralis();
-    const nft_contract_address = "0x3d05364012a5f131e3a32a68deba6c23041fb917"; 
     const { walletAddress } = useMoralisDapp();
     const { id } = useParams();
     const [nft, setNft] = useState();
     const [tokenId, setTokenId] = useState(null);
     const [contractAddress, setContractaddress] = useState(null);
-    const web3 = new Web3(window.ethereum);
 
-    const nft_market_place_address = "0xf3c3fce5be43fe2f56a08478455f39dcb8251dd4";
-    const coordinatorKey = "0x1783aa931119a96ef90e60d1b8cacdb2294a8d83a3b610459d980e8166c63cf1";
-    const nft_market_place_abi = [{"inputs": [{"internalType": "address", "name": "_operator", "type": "address"}], "stateMutability": "nonpayable", "type": "constructor", "name": "constructor"}, {"anonymous": false, "inputs": [{"indexed": true, "internalType": "address", "name": "beneficiary", "type": "address"}, {"indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256"}], "name": "BalanceWithdrawn", "type": "event"}, {"anonymous": false, "inputs": [{"indexed": true, "internalType": "bytes32", "name": "offeringId", "type": "bytes32"}, {"indexed": true, "internalType": "address", "name": "buyer", "type": "address"}], "name": "OfferingClosed", "type": "event"}, {"anonymous": false, "inputs": [{"indexed": true, "internalType": "bytes32", "name": "offeringId", "type": "bytes32"}, {"indexed": true, "internalType": "address", "name": "hostContract", "type": "address"}, {"indexed": true, "internalType": "address", "name": "offerer", "type": "address"}, {"indexed": false, "internalType": "uint256", "name": "tokenId", "type": "uint256"}, {"indexed": false, "internalType": "uint256", "name": "price", "type": "uint256"}, {"indexed": false, "internalType": "string", "name": "uri", "type": "string"}], "name": "OfferingPlaced", "type": "event"}, {"anonymous": false, "inputs": [{"indexed": false, "internalType": "address", "name": "previousOperator", "type": "address"}, {"indexed": false, "internalType": "address", "name": "newOperator", "type": "address"}], "name": "OperatorChanged", "type": "event"}, {"inputs": [{"internalType": "address", "name": "_newOperator", "type": "address"}], "name": "changeOperator", "outputs": [], "stateMutability": "nonpayable", "type": "function"}, {"inputs": [{"internalType": "bytes32", "name": "_offeringId", "type": "bytes32"}], "name": "closeOffering", "outputs": [], "stateMutability": "payable", "type": "function"}, {"inputs": [{"internalType": "address", "name": "_offerer", "type": "address"}, {"internalType": "address", "name": "_hostContract", "type": "address"}, {"internalType": "uint256", "name": "_tokenId", "type": "uint256"}, {"internalType": "uint256", "name": "_price", "type": "uint256"}], "name": "placeOffering", "outputs": [], "stateMutability": "nonpayable", "type": "function"}, {"inputs": [{"internalType": "address", "name": "_address", "type": "address"}], "name": "viewBalances", "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}], "stateMutability": "view", "type": "function"}, {"inputs": [{"internalType": "bytes32", "name": "_offeringId", "type": "bytes32"}], "name": "viewOfferingNFT", "outputs": [{"internalType": "address", "name": "", "type": "address"}, {"internalType": "uint256", "name": "", "type": "uint256"}, {"internalType": "uint256", "name": "", "type": "uint256"}, {"internalType": "bool", "name": "", "type": "bool"}], "stateMutability": "view", "type": "function"}, {"inputs": [], "name": "withdrawBalance", "outputs": [], "stateMutability": "nonpayable", "type": "function"}];
-    const marketPlace = new web3.eth.Contract(nft_market_place_abi,nft_market_place_address);
+    const web3 = new Web3(window.ethereum);
+    const MoralisProvider = useMoralisProvider();
+    const { NFTMarketPlaceAddress, NFTContractAddress, OPWalletPrivateKey, NFTMarketPlaceABI } = useNFTInfoProvider();
+    
+    const marketPlace = new web3.eth.Contract(NFTMarketPlaceABI, NFTMarketPlaceAddress);
 
     useEffect(() => {
         if (!walletAddress) return;
@@ -27,25 +28,18 @@ function MyCollectionItemSell() {
     }, [walletAddress]);
 
     async function getNFTs() {
-        const queryNFTs = new Moralis.Query("NFTs");
-        queryNFTs.equalTo("objectId", id);
-        const data = await queryNFTs.find();
-        const dataFormed = {
-            id: data[0].id,
-            name: data[0].get("name"),
-            description: data[0].get("description"),
-            imageURI: data[0].get("imageURI"),
-            ownerOf: data[0].get("ownerOf"),
-            tx: data[0].get("tx"),
-        };
-
-        const receipt = await web3.eth.getTransactionReceipt(data[0].get("tx"));
+        const dataFormed = await MoralisProvider.moralisNFTSQueryEqualTo("NFTs", {
+            paramKey : "objectId",
+            paramValue : id 
+            });
+            
+        const receipt = await web3.eth.getTransactionReceipt(dataFormed.tx);
         if (receipt == null) {
             setTokenId(null);
         } else {
             console.log(receipt);
             setTokenId(receipt.logs[0].topics[3]);
-            setContractaddress(nft_contract_address);
+            setContractaddress(NFTContractAddress);
         }
         return dataFormed;
     }
@@ -89,7 +83,7 @@ function MyCollectionItemSell() {
                     { type: "uint256", name: "tokenURI" },
                 ],
             },
-            [nft_market_place_address, tokenId]
+            [NFTMarketPlaceAddress, tokenId]
         );
 
         const transactionParameters = {
@@ -128,12 +122,12 @@ function MyCollectionItemSell() {
 
         const functionCall = marketPlace.methods.placeOffering(offerer,hostContract,tokenId,web3.utils.toWei(price,"ether")).encodeABI();
         const transactionBody = {
-            to: nft_market_place_address,
+              to: NFTMarketPlaceAddress,
               data:functionCall,
               gas:400000,
         }
 
-        const signedTransaction = await web3.eth.accounts.signTransaction(transactionBody, coordinatorKey);
+        const signedTransaction = await web3.eth.accounts.signTransaction(transactionBody, OPWalletPrivateKey);
         return signedTransaction;
     }    
 

@@ -1,18 +1,10 @@
 import { useMoralis } from "react-moralis";
 import { useEffect, useState } from "react";
-import Web3 from "web3";
 import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
 import MyCollectionItem from "./MyCollectionItem";
 
-const styles ={
-    wrapbody: {
-   
-    justifyContent: "left"
-    }
-}
-
 function MyCollection() {
-    const { authenticate, Moralis, isAuthenticated, user, refetchUserData } =
+    const { authenticate, Moralis, isAuthenticated } =
         useMoralis();
     const [products, setproducts] = useState([]);
     const [Loading, setLoading] = useState(true);

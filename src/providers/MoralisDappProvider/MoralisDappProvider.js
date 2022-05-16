@@ -4,7 +4,7 @@ import MoralisDappContext from "./context";
 import Web3 from "web3";
 
 function MoralisDappProvider({ children }) {
-    const { Moralis, user } = useMoralis();
+    const { user } = useMoralis();
     const [walletAddress, setWalletAddress] = useState();
     const [chainId, setChainId] = useState();
 

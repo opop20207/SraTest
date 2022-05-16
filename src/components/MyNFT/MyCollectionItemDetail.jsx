@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams, NavLink } from "react-router-dom";
-import { useMoralis } from "react-moralis";
 import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
+import useMoralisProvider from "../../hooks/useMoralisProvider";
 
 function MyCollectionItemDetail() {
     const { id } = useParams();
-    const { Moralis } = useMoralis();
     const [nft, setNft] = useState();
+    const MoralisProvider = useMoralisProvider();
     const { walletAddress } = useMoralisDapp();
 
     useEffect(() => {
@@ -17,17 +17,11 @@ function MyCollectionItemDetail() {
     }, [walletAddress]);
 
     async function getNFTs() {
-        const queryNFTs = new Moralis.Query("NFTs");
-        queryNFTs.equalTo("objectId", id);
-        const data = await queryNFTs.find();
-        console.log(data);
-        const dataFormed = {
-            id: data[0].id,
-            name: data[0].get("name"),
-            description: data[0].get("description"),
-            imageURI: data[0].get("imageURI"),
-            ownerOf: data[0].get("ownerOf"),
-        };
+        const dataFormed = await MoralisProvider.moralisNFTSQueryEqualTo("NFTs", {
+            paramKey : "objectId",
+            paramValue : id 
+            });
+
         return dataFormed;
     }
     return (

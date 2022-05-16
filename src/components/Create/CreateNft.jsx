@@ -127,14 +127,10 @@ function CreateNft() {
 
     return (
         <>
-            
-
             <div class="mb-3">
                 <h2 className="pageName">스킨 NFT Create</h2>
                 <div class="form-group">
-                   
                    <div className="imgcontent">
-                      
                         <div >
                             <input
                                 type="file"
@@ -144,7 +140,6 @@ function CreateNft() {
                                 onChange={readImage}
                             /> 
                             <label className="wrap_preview" for="file"  onMouseOver={ () => hoverInenvet()} onMouseOut = { () => hoverOutenvet()}>
-                                
                                 <div className="preview_image">
                                 { preImage != "" ?  <img  id="preview-image" src = { preImage} /> :  "" }
                                 </div>
@@ -152,12 +147,8 @@ function CreateNft() {
                                 <div className="default_image">
 
                                 <img style ={{visibility: hoverImg }} src = {process.env.PUBLIC_URL + '/imgs/picture_icon.png'}/>
-                             
-                               
                                 </div>
-                              
                             </label>
-                           
                         </div>
                    </div>
                    
@@ -193,26 +184,17 @@ function CreateNft() {
                             </select>
                         </div>
 
-                        <div >
+                        <div>
                     
                         <button
                             class="btn btn-primary"
                             id="upload"
-                            onClick={upload}
-                        >
+                            onClick={upload}>
                             Upload and Mint
                          </button>
                         </div>
-
-                        
                     </div>
-
-                  
-                  
                 </div>
-              
-
-             
             </div>
         </>
     );

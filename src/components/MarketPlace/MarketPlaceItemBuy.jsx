@@ -1,16 +1,15 @@
 /* global BigInt */
 
 import { useMoralis } from "react-moralis";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Web3 from "web3";
 import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
-import MarketPlaceItem from "./MarketPlaceItem";
+import useMoralisProvider from "../../hooks/useMoralisProvider"
+import useNFTInfoProvider from "../../hooks/useNFTInfoProvider";
 
 function MarketPlaceItemBuy() {
-    const { authenticate, Moralis, isAuthenticated } = useMoralis();
-    const nft_contract_address = "0x3d05364012a5f131e3a32a68deba6c23041fb917";
-    const nft_market_place_address = "0xf3c3fce5be43fe2f56a08478455f39dcb8251dd4";
+    const { Moralis } = useMoralis();
     const { walletAddress } = useMoralisDapp();
     const { id } = useParams();
     const [nftprice, setNftprice] = useState();
@@ -19,48 +18,41 @@ function MarketPlaceItemBuy() {
     const [nft, setNft] = useState("");
     const [tokenId, setTokenId] = useState(null);
     const [contractAddress, setContractaddress] = useState(null);
+
     const web3 = new Web3(window.ethereum);
+    const MoralisProvider = useMoralisProvider();
+    const { NFTMarketPlaceAddress, NFTContractAddress } = useNFTInfoProvider();
 
     useEffect(() => {
         if (!walletAddress) return;
-        console.log("MarketPlaceItemBuy Executed!! : ", id);
         getNFTs().then((response) => {
             setNft(response);
         });
     }, [walletAddress]);
 
     async function getNFTs() {
-        const queryNFTs = new Moralis.Query("Offerings");
-        queryNFTs.equalTo("objectId", id);
-        const data = await queryNFTs.find();
-        const dataFormed = {
-            id: data[0].id,
-            name: data[0].get("name"),
-            description: data[0].get("description"),
-            imageURI: data[0].get("imageURI"),
-            offerBy: data[0].get("offerBy"),
-            price: data[0].get("price"),
-            tx: data[0].get("tx"),
-            offeringId: data[0].get("offeringId"),
-            objectId: data[0].get("nftobjectId"),
-        };
-        setNftprice(data[0].get("price"));
-        setNftid(data[0].get("offeringId"));
-        setNftobjectid(data[0].get("nftobjectId"));
+        const dataFormed = await MoralisProvider.moralisOfferingsQueryEqualTo("Offerings", {
+            paramKey : "objectId",
+            paramValue : id 
+            });
+
+        setNftprice(dataFormed.price);
+        setNftid(dataFormed.offeringId);
+        setNftobjectid(dataFormed.objectId);
     
-        const receipt = await web3.eth.getTransactionReceipt(data[0].get("tx"));
+        const receipt = await web3.eth.getTransactionReceipt(dataFormed.tx);
         if (receipt == null) {
             setTokenId(null);
         } else {
             console.log(receipt);
             setTokenId(receipt.logs[0].topics[3]);
-            setContractaddress(nft_contract_address);
+            setContractaddress(NFTContractAddress);
         }
         return dataFormed;
     }
     //Buy NFT Funtions
 
-    async function buyNFT(context) {
+    async function buyNFT() {
         const offeringId = nftid;
         const price = Moralis.Units.ETH(nftprice);
         const priceHexString = BigInt(price).toString(16);
@@ -87,7 +79,7 @@ function MarketPlaceItemBuy() {
         );
 
         const transactionParameters = {
-            to: nft_market_place_address,
+            to: NFTMarketPlaceAddress,
             from: window.ethereum.selectedAddress,
             value: priceEncoded,
             data: encodedFunction,

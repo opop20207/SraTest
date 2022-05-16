@@ -5,37 +5,24 @@ import 'slick-carousel/slick/slick-theme.css';
 
 
 function Main(){
-
-    
     const imgSliders=[
-        {  src: "/imgs/mainback1.jpg"  },
+        {src: "/imgs/mainback1.jpg"},
         {src: "/imgs/mainback2.png"},
-        
     ]
-    console.log("ㄱ시발 뭐놓")
-    console.log( imgSliders)
 
     const renderSlider = () => 
-    
         imgSliders.map( (imgslider, index) =>(
-          
-            
             <div key={index}>
                 <img src = { process.env.PUBLIC_URL+imgslider.src}  style={styles.imgsliderCss}/>
-               
             </div>
         ));
-    
-    
-    
-  return(
-      <div>
-          <StlyedSlider {...settings}>
-          {renderSlider()}
-          </StlyedSlider>
-    
-      </div>
-  
+        
+    return(
+        <div>
+            <StlyedSlider {...settings}>
+            {renderSlider()}
+            </StlyedSlider>
+        </div>
   );
 }
 
