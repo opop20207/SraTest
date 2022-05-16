@@ -3,14 +3,10 @@ import { useParams, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Web3 from "web3";
 import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
-import MyCollectionItem from "./MyCollectionItem";
 
 function MyCollectionItemSell() {
-    const { authenticate, Moralis, isAuthenticated } = useMoralis();
+    const { Moralis } = useMoralis();
     const nft_contract_address = "0x3d05364012a5f131e3a32a68deba6c23041fb917"; 
-    const OP_gateway_address = "0xA18c119ae67cc47C37873EFaDDdBe74398477aCD";
-    const [products, setproducts] = useState([]);
-    const [Loading, setLoading] = useState(true);
     const { walletAddress } = useMoralisDapp();
     const { id } = useParams();
     const [nft, setNft] = useState();
@@ -59,17 +55,10 @@ function MyCollectionItemSell() {
         const price = document.getElementById("price").value;
 
         await notify("Approval 진행 중..");
-        console.log("contractAddress : ", contractAddress, " and tokenID : ", tokenId);
         const approval = await approveMarketPlace(contractAddress, tokenId);
-        const tx_approval = `<p> Approval transaction ${approval}</p>`;
         await notify("Approval 진행 완료! placeOffering 진행 중..");
-
-        console.log("Approval transaction hash : ", tx_approval);
         const offering = await placeOffering(contractAddress, tokenId, price);
-        console.log("Offering transaction hash : ", offering);
         await notify("placeOffering 진행 완료! Moralis DB Update 진행 중..");
-
-        //console.log("4. log[0].topics[0]", offering["logs"][0]["topics"][0]);
 
         const offeringId = offering["logs"][0]["topics"][1];
 
@@ -123,8 +112,6 @@ function MyCollectionItemSell() {
             price: _price,
         };
 
-        console.log("@@ placeOffering params => ", params);
-
         const signedTransaction = await _placeOffering(params);
         const fulfillTx = await web3.eth.sendSignedTransaction(
             signedTransaction.rawTransaction
@@ -134,33 +121,19 @@ function MyCollectionItemSell() {
 
     async function _placeOffering(params)
     {
-        console.log("_placeOffering() Executed!");
-        console.log("chainId checking... ", web3.eth.net.getId());
-
         const hostContract = params.hostContract;
         const offerer = params.offerer;
         const tokenId = params.tokenId;
         const price = params.price;
-        const nonceOperator = web3.eth.getTransactionCount(nft_market_place_address);
+
         const functionCall = marketPlace.methods.placeOffering(offerer,hostContract,tokenId,web3.utils.toWei(price,"ether")).encodeABI();
         const transactionBody = {
             to: nft_market_place_address,
-              //nonce:nonceOperator,
               data:functionCall,
               gas:400000,
-              //gasPrice:web3.utils.toWei("100000", "gwei")
         }
 
-        console.log(" ** nonceOperator is ....");
-        console.log(nonceOperator);
-        console.log("trasactionBody is.. ");
-        console.log(transactionBody);
-        console.log("coordinatorKey is.. ");
-        console.log(coordinatorKey);
         const signedTransaction = await web3.eth.accounts.signTransaction(transactionBody, coordinatorKey);
-        console.log("_placeOffering() Ended!, signedTransaction is ...");
-        console.log(signedTransaction);
-
         return signedTransaction;
     }    
 

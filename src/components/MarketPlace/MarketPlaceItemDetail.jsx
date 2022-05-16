@@ -4,14 +4,11 @@ import { useMoralis } from "react-moralis";
 import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
 import "../../static/css/Create.css";
 
-
 function MarketPlaceItemDetail() {
     const { id } = useParams();
     const { Moralis } = useMoralis();
     const [nft, setNft] = useState();
     const { walletAddress } = useMoralisDapp();
-
-    
 
     useEffect(() => {
         if (!walletAddress) return;
@@ -33,33 +30,20 @@ function MarketPlaceItemDetail() {
             ownerOf: data[0].get("offerBy"),
             price: data[0].get("price"),
         };
-        console.log("!@!@#!@#@");
-        console.log(nft);
         return dataFormed;
     }
+
     return (
         <>
-        
-       
-
         <div className="form-group">
             <div className="imgcontent">
-                        
-                        <div >
-                       
-                            <label className="wrap_preview" for="file" >
-                                
-                        
-                                <div className="preview_image">
-
-                                 <img src={nft?.imageURI} />
-                            
-                                
-                                </div>
-                                
-                            </label>
-                            
+                <div >
+                    <label className="wrap_preview" for="file" >
+                        <div className="preview_image">
+                            <img src={nft?.imageURI} />
                         </div>
+                    </label>
+                </div>
             </div>
 
             <div className="itemContent">
@@ -67,12 +51,10 @@ function MarketPlaceItemDetail() {
                           <br/>
                           <div className="owner_area">
                                 <p >Owner:&nbsp; </p>
-                               
                                 <p>{nft?.ownerOf}</p>
                             </div>
 
-    
-                       
+
                         <h5>작품설명</h5>
                         <div className="description_area" >
                           
@@ -99,19 +81,11 @@ function MarketPlaceItemDetail() {
             </div>
         </div>
 
-
-
         <div className="owner_buy_area">
              <div className="buy_btn_group"> 
                 <NavLink to={`/MarketPlace/${id}/buy`}><button className="btn btn-primary"><p>Buy</p></button></NavLink>
             </div>
-
-          
-
         </div>
-          
-          
-           
         </>
     );
 }

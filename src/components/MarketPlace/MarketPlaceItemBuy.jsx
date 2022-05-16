@@ -61,27 +61,17 @@ function MarketPlaceItemBuy() {
     //Buy NFT Funtions
 
     async function buyNFT(context) {
-        console.log("BuyNFT Started... ");
-        console.log("offering price is ... ", nftprice);
-        console.log("offering ID is ... ", nftid);
-
         const offeringId = nftid;
         const price = Moralis.Units.ETH(nftprice);
         const priceHexString = BigInt(price).toString(16);
 
         await notify("closeOffering 진행 중..");
-
-        console.log("offeringId is :", offeringId, "price is ", price, "and Hex is ", priceHexString);
         const closedOffering = await closeOffering(offeringId, priceHexString);
         const tx_closeOffering = `<p> Buying transaction ${closedOffering}</p>`;
-        console.log("closedOffering is ... ", closedOffering);
-
         await notify("closeOffering 진행 완료! DB 수정중...");
 
         await changeOwner();
         await destroyNFT();
-        // const tx_destroyNFT = await destroyNFT();
-        // console.log("destroyNFT result -> ", tx_destroyNFT);
 
         await notify("Transaction 완료! (반영에 시간이 걸릴 수 있습니다. MetaMask 참조)");
     }
@@ -114,18 +104,9 @@ function MarketPlaceItemBuy() {
         changeOwner(void)
         해당 NFTs의 소유권을 현재 지갑 주소 주인으로 옮깁니다. 
         */
-        console.log("changeOwner executed.. ");
-
         const queryNFTs = new Moralis.Query("NFTs");
         queryNFTs.equalTo("objectId", nftobjectid);
-
-        console.log("objectId is .. ", nftobjectid);
-
-        console.log("ChangeOwner test.. ", queryNFTs);
         const changeObject = await queryNFTs.first();
-
-        console.log("ChangeOwner test.. ", changeObject);
-
         changeObject.set("ownerOf", walletAddress);
         await changeObject.save();
     }

@@ -28,8 +28,6 @@ function MyCollectionItemDetail() {
             imageURI: data[0].get("imageURI"),
             ownerOf: data[0].get("ownerOf"),
         };
-        console.log("!@!@#!@#@");
-        console.log(nft);
         return dataFormed;
     }
     return (
