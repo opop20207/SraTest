@@ -21,7 +21,7 @@ function MarketPlaceItem(props) {
             <div key={product.id} className="Card" >
                 <NavLink to={`/MarketPlace/${product.id}`} style={{textDecoration:'none'}}>
 
-                    <div  className="imgcontent">
+                    <div  className="imgContent">
                     <img src={product.imageURI} />
                     
                     </div>
@@ -32,7 +32,7 @@ function MarketPlaceItem(props) {
                         <hr></hr>
                         <div className="aligncontent">
                       
-                         <img style={{width : '20px' , height: '20px'}} src= {process.env.PUBLIC_URL+"/imgs/ether.png"} />
+                         <img style={{width : '20px' , height: '20px'}} src= {process.env.PUBLIC_URL+"/imgs/ethereum_icon.png"} />
                          <p id="price">{product.price} Eth</p>
                         </div>
                 

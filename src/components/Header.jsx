@@ -12,7 +12,7 @@ function Header() {
             <nav>
                 <div class="UpperNav">
                     <div class="navContainer">
-                        <Menu  mode="horizontal">
+                        <Menu  mode="horizontal"style={{ backgroundColor: "white"}} >
                             <MenuItem  style={{padding: "0px" , backgroundColor: "white"}} key="CLone.ns">
                                 <Link to={"/"}>
                                     <span><img style={{width : '200px' , height: '100%'}} src= { process.env.PUBLIC_URL+"/imgs/clone.ns.logo.jpg"}/></span>
