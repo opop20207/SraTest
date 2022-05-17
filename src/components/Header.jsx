@@ -12,7 +12,7 @@ function Header() {
             <nav>
                 <div class="UpperNav">
                     <div class="navContainer">
-                        <Menu style={{padding: "0px" , backgroundColor: "white"}} mode="horizontal">
+                        <Menu  mode="horizontal">
                             <MenuItem  style={{padding: "0px" , backgroundColor: "white"}} key="CLone.ns">
                                 <Link to={"/"}>
                                     <span><img style={{width : '200px' , height: '100%'}} src= { process.env.PUBLIC_URL+"/imgs/clone.ns.logo.jpg"}/></span>
@@ -65,7 +65,7 @@ function Header() {
                                 </MenuItem>
                             </SubMenu>
 
-                            <MenuItem style={{ backgroundColor: "white"}} key="Create">
+                            <MenuItem key="Create">
                                 <Link to={"/Create"}>
                                     <span>Create</span>
                                 </Link>
@@ -74,23 +74,13 @@ function Header() {
                     </div>
 
                     <div className="personal_settings">
-                        <div class="withdrawContainer">
-                           
-                            <Menu style={{padding: "0px" , backgroundColor: "white"}} mode="horizontal">
-                                <MenuItem style={{ backgroundColor: "white"}}>
+                        <div class="withdrawContainer" style={{marginRight: "20px"}}>
                                 <Withdrawal />
-                                </MenuItem>
-                            </Menu>
                         </div>
                        
 
-                        <div class="loginContainer">
-                            <Menu style={{padding: "0px" , backgroundColor: "white"}} mode="horizontal">
-                                <MenuItem style={{ backgroundColor: "white"}}>
+                        <div class="loginContainer"style={{marginRight: "30px"}}>
                                 <Account />
-                                </MenuItem>
-                            </Menu>
-                          
                         </div>
                     </div>
 

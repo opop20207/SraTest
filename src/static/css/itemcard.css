@@ -7,12 +7,13 @@
  
 }
 
-.card{
+.Card{
     border-radius: 10px;
-    width: 200px;
-    height: 300px;
+    padding: 10px;
+    width: 220px;
+    height: 320px;
     background-color: white;
-    box-shadow: 0px 2px 5px rgba(75, 75, 75, 0.582);
+
     margin: 20px;
     transition: 0.3s;
     overflow: hidden;
@@ -20,18 +21,55 @@
   
 }
 
+
+.Card:hover{
+    background-color: skyblue;
+    transform: translateY(-5px);
+    box-shadow: 0px 2px 4px rgba(75, 75, 75, 0.582);
+}
+
+
+.card{
+    border-radius: 10px;
+    padding: 10px;
+    width: 220px;
+    height: 320px;
+    background-color: white;
+
+    margin: 20px;
+    transition: 0.3s;
+    overflow: hidden;
+    position: relative;
+   
+  
+}
+
+.Card p {
+    text-decoration: none;
+    color:  black;
+}
+
+
 .card:hover{
     background-color: skyblue;
     transform: translateY(-5px);
+    box-shadow: 0px 2px 4px rgba(75, 75, 75, 0.582);
 }
-
 
 
 .imgcontent img{
    
+    border-radius: 5px;
+    border: 1px solid rgb(244, 244, 244);
+    box-shadow: 0px 1px 2px rgba(75, 75, 75, 0.582);
     width: 100%;
     height: 200px;
     object-fit:contain;
   
+}
+
+.aligncontent{
+    display: flex;
+	flex-direction: row;
 }
 

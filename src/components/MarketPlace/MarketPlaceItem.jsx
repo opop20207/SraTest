@@ -18,8 +18,8 @@ function MarketPlaceItem(props) {
       
         props.products &&
         props.products.map((product) => (
-            <div key={product.id} className="card" >
-                <NavLink to={`/MarketPlace/${product.id}`}>
+            <div key={product.id} className="Card" >
+                <NavLink to={`/MarketPlace/${product.id}`} style={{textDecoration:'none'}}>
 
                     <div  className="imgcontent">
                     <img src={product.imageURI} />
@@ -27,13 +27,15 @@ function MarketPlaceItem(props) {
                     </div>
                     
 
-                    <div id="cardContent">
+                    <div className="cardcontent">
                         <p id="title">{product.name}</p>
-                        <div id="aligncontent">
-                            <p id="description">{product.description}</p>
+                        <hr></hr>
+                        <div className="aligncontent">
+                      
+                         <img style={{width : '20px' , height: '20px'}} src= {process.env.PUBLIC_URL+"/imgs/ether.png"} />
+                         <p id="price">{product.price} Eth</p>
                         </div>
-                        <p id="temp">가격</p>
-                        <p id="price">{product.price}</p>
+                
                             
                     </div>
                    
@@ -45,6 +47,7 @@ function MarketPlaceItem(props) {
     return( 
         <div className="card-wrapper" >
             { renderItems()}
+
         </div>
         
     );
