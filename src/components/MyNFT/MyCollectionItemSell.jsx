@@ -7,7 +7,6 @@ import useMoralisProvider from "../../hooks/useMoralisProvider";
 import useNFTInfoProvider from "../../hooks/useNFTInfoProvider";
 
 function MyCollectionItemSell() {
-    const { Moralis } = useMoralis();
     const { walletAddress } = useMoralisDapp();
     const { id } = useParams();
     const [nft, setNft] = useState();
@@ -32,7 +31,7 @@ function MyCollectionItemSell() {
             paramKey : "objectId",
             paramValue : id 
             });
-            
+        
         const receipt = await web3.eth.getTransactionReceipt(dataFormed.tx);
         if (receipt == null) {
             setTokenId(null);
@@ -55,21 +54,18 @@ function MyCollectionItemSell() {
         await notify("placeOffering 진행 완료! Moralis DB Update 진행 중..");
 
         const offeringId = offering["logs"][0]["topics"][1];
+        const dataParam = {
+            name : nft.name,
+            description : nft.description,
+            offerBy : nft.ownerOf,
+            price : price,
+            imageURI : nft.imageURI,
+            tx : nft.tx,
+            offeringId : offeringId,
+            nftobjectID : id
+        }
+        await MoralisProvider.moralisObjectDataSave("Offerings", dataParam);
 
-        const savedData = new Moralis.Object("Offerings");
-        savedData.set("name", nft.name);
-        savedData.set(
-            "description",
-            nft.description
-        );
-        savedData.set("offerBy", nft.ownerOf);
-        savedData.set("price", price);
-        savedData.set("imageURI", nft.imageURI);
-        savedData.set("tx", nft.tx);
-        savedData.set("offeringId", offeringId);
-        savedData.set("nftobjectId", id);
-
-        await savedData.save();
         await notify("Transaction 완료!");
     }
     

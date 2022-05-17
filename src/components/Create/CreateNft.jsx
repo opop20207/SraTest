@@ -1,14 +1,17 @@
 import { useState } from "react";
-import { ThemeProvider } from "react-bootstrap";
 import { useMoralis } from "react-moralis";
 import Web3 from "web3";
 import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
 import "../../static/css/Create.css";
+import useMoralisProvider from "../../hooks/useMoralisProvider";
+import useNFTInfoProvider from "../../hooks/useNFTInfoProvider";
 
 function CreateNft() {
     const { authenticate, isAuthenticated, Moralis } = useMoralis();
-    const nft_contract_address = "0x3d05364012a5f131e3a32a68deba6c23041fb917"; //NFT Minting Contract Use This One "Batteries Included", code of this contract is in the github repository under contract_base for your reference.
     const web3 = new Web3(Web3.givenProvider);
+    const MoralisProvider = useMoralisProvider();
+    const { NFTContractAddress } = useNFTInfoProvider();
+
     const { walletAddress } = useMoralisDapp();
     const [ preImage , setpreImage] = useState("");
     const [hoverImg , sethoverImg] = useState("visible");
@@ -38,18 +41,17 @@ function CreateNft() {
         const metadataURI = metadataFile.ipfs();
         const tx = await mintToken(metadataURI);
 
-        const savedData = new Moralis.Object("NFTs");
-        savedData.set("name", document.getElementById("name").value);
-        savedData.set(
-            "description",
-            document.getElementById("description").value
-        );
-        savedData.set("imageURI", imageURI);
-        savedData.set("ownerOf", walletAddress);
-        savedData.set("createdBy", walletAddress);
-        savedData.set("tx", tx);
-
-        await savedData.save();
+        const name = document.getElementById("name").value;
+        const description = document.getElementById("description").value;
+        const dataParam = {
+            name : name,
+            description : description,
+            imageURI : imageURI,
+            ownerOf : walletAddress,
+            createdBy : walletAddress,
+            tx : tx
+        }
+        await MoralisProvider.moralisObjectDataSave("NFTs", dataParam);
     }
 
     async function mintToken(_uri) {
@@ -68,7 +70,7 @@ function CreateNft() {
         );
 
         const transactionParameters = {
-            to: nft_contract_address,
+            to: NFTContractAddress,
             from: walletAddress,
             data: encodedFunction,
         };
@@ -87,7 +89,6 @@ function CreateNft() {
     }
 
     function readImage(e) {
-        
         const reader = new FileReader();
         const previewImage = document.getElementById("preview-image");
        

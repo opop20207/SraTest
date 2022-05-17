@@ -17,11 +17,10 @@ function MarketPlaceItemBuy() {
     const [nftobjectid, setNftobjectid] = useState("");
     const [nft, setNft] = useState("");
     const [tokenId, setTokenId] = useState(null);
-    const [contractAddress, setContractaddress] = useState(null);
 
     const web3 = new Web3(window.ethereum);
     const MoralisProvider = useMoralisProvider();
-    const { NFTMarketPlaceAddress, NFTContractAddress } = useNFTInfoProvider();
+    const { NFTMarketPlaceAddress } = useNFTInfoProvider();
 
     useEffect(() => {
         if (!walletAddress) return;
@@ -46,7 +45,6 @@ function MarketPlaceItemBuy() {
         } else {
             console.log(receipt);
             setTokenId(receipt.logs[0].topics[3]);
-            setContractaddress(NFTContractAddress);
         }
         return dataFormed;
     }
