@@ -50,9 +50,18 @@ function MyCollection() {
         <div class="temp">
             <h2>MyCollecion</h2>
    
-            {Loading ? <strong>Loading...</strong> : null}
+            {Loading ? 
+                      <div id="loading">
+                          <div class="spinner"></div>
+                          <strong>Loading...</strong>
+                          </div>
+                     :
+                     <MyCollectionItem products={products} />
+                    }
+
           
-            <MyCollectionItem products={products} />
+          
+           
             
         </div>
     );

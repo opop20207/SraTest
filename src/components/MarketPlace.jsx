@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Web3 from "web3";
 import { useMoralisDapp } from "../providers/MoralisDappProvider/MoralisDappProvider";
 import MarketPlaceItem from "./MarketPlace/MarketPlaceItem";
+import "../static/css/MarketPlace.css";
 
 function MarketPlace(){
     const { authenticate, Moralis, isAuthenticated, user, refetchUserData } =
@@ -10,6 +11,7 @@ function MarketPlace(){
     const [products, setproducts] = useState([]);
     const [Loading, setLoading] = useState(true);
     const { walletAddress } = useMoralisDapp();
+    const [PageContent,setPageContent] = useState();
 
     useEffect(() => {
         if (!walletAddress) return;
@@ -38,23 +40,73 @@ function MarketPlace(){
         return dataFormedArray;
     }
 
-    if (!isAuthenticated) {
-        return (
-            <div>
-                <h1>로그인부터하셈 ㅋㅋ</h1>
-                <button onClick={() => authenticate()}>Connect MetaMask</button>
-            </div>
-        );
-    }
 
+    const Tags = [ "man","women","warrier"];
+
+   
+ 
     return (
-        <div class="temp">
-            <p>MarketPlace</p>
-            {Loading ? <strong>Loading...</strong> : null}
-          
-            <MarketPlaceItem products={products} />
+
+        <>
+
+            <h2 className="markettitle"> MineCraft Avatar</h2>
+            <h5 className="tagtitle">Hot tags</h5>
+            <div className="TagSearch">
+                <div className="Tags">
+                    {
+                       Tags.map( (tag) => (
+                        <div className="tagitem">
+                
+                        { tag}
+                        </div>
+                       ))
+                    }
+
+                </div>
+                <div className="Search">
+                
+                    <input
+                        id="searchitem"
+                        type="text"
+
+                        placeholder="search item"
+                    />
+
+                    <button type="button">
+                        <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" ></img>
+                    </button>
+                </div>
+            </div>
+
+
+            <div className="PageContent">
+
+                <div className="filter">
+                    <h3>Filter</h3>
+                  
+                </div>
+                
+                <div className="vertical-line"/>
+             
+                <div className="itemlist">
+                  
+                
+                    {Loading ? 
+                      <div id="loading">
+                          <div class="spinner"></div>
+                          <strong>Loading...</strong>
+                          </div>
+                     :
+                    <MarketPlaceItem products={products} />
+                    }
+                </div>
+                
+            </div>
             
-        </div>
+        
+       
+        </>
+       
     );
 }
 

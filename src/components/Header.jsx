@@ -1,9 +1,20 @@
 import "../static/css/Header.css";
 import { Link } from "react-router-dom";
 import Menu, { SubMenu, Item as MenuItem, Divider } from "rc-menu";
+
 import "rc-menu/assets/index.css";
 import Account from "../components/Account";
 import Withdrawal from "../components/Withdrawal";
+import styled from 'styled-components';
+const Menuitem =styled(MenuItem)`
+.rc-menu-horizontal > .rc-menu-submenu-selected,
+.rc-menu-horizontal > .rc-menu-item-selected {
+  border-bottom: 2px solid #2db7f5;
+  background-color: #ffffff;
+  color: #2baee9;
+}
+
+`;
 
 function Header() {
 
@@ -13,6 +24,8 @@ function Header() {
                 <div class="UpperNav">
                     <div class="navContainer">
                         <Menu  mode="horizontal"style={{ backgroundColor: "white"}} >
+
+                        
                             <MenuItem  style={{padding: "0px" , backgroundColor: "white"}} key="CLone.ns">
                                 <Link to={"/"}>
                                     <span><img style={{width : '200px' , height: '100%'}} src= { process.env.PUBLIC_URL+"/imgs/clone.ns.logo.jpg"}/></span>
@@ -65,7 +78,7 @@ function Header() {
                                 </MenuItem>
                             </SubMenu>
 
-                            <MenuItem key="Create">
+                            <MenuItem  style={{ backgroundColor: "white"}} key="Create">
                                 <Link to={"/Create"}>
                                     <span>Create</span>
                                 </Link>
