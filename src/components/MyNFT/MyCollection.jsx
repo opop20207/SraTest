@@ -2,6 +2,8 @@ import { useMoralis } from "react-moralis";
 import { useEffect, useState } from "react";
 import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
 import MyCollectionItem from "./MyCollectionItem";
+import '../../static/css/MyCollection.css';
+import '../../static/css/itemcard.css';
 
 function MyCollection() {
     const { authenticate, Moralis, isAuthenticated } =
@@ -47,8 +49,8 @@ function MyCollection() {
     }
 
     return (
-        <div class="temp">
-            <h2>MyCollecion</h2>
+        <div class="MyColPage">
+            <h2>MyColletion</h2>
    
             {Loading ? 
                       <div id="loading">

@@ -1,0 +1,13 @@
+.MyColPage{
+    background-image:  linear-gradient(rgba(255, 255, 255, 0.233), rgba(255, 255, 255, 0.233)),url('../imgs/mainback1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+   height: 100vh;
+   padding: 40px;
+
+}
+
+.MyColPage > h2{
+    font-weight: 800;
+}

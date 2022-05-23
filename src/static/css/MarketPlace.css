@@ -23,8 +23,11 @@
 	float: right;
     padding: 5px;
     border: 1px solid  #dddddd;
-    border-radius: 15px;
+    border-radius: 35px;
+    display: flex;
+    flex-direction: row;
 
+   
 }
 
 
@@ -32,9 +35,10 @@
     border: none;
     background-color:transparent;
     outline: none;
-    font-size: 20px;
-    height: 40px;
-    margin-left: 10px;
+    font-size: 16px;
+    height: 35px;
+    margin-left: 12px;
+    width: 100%;
 }
 
 .Search > button{
@@ -45,9 +49,9 @@
 }
 
 .Search >button> img{
-   width: 35px;
-   height: 35px;
-  margin: 5px;
+   width: 20px;
+   height: 20px;
+  margin: 10px 15px 10px 10px;
 }
 
 .TagSearch{
