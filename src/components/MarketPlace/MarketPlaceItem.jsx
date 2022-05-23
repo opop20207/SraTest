@@ -27,10 +27,10 @@ function MarketPlaceItem(props) {
                     </div>
                     
 
-                    <div className="cardcontent">
+                    <div className="cardContent">
                         <p id="title">{product.name}</p>
                         <hr></hr>
-                        <div className="aligncontent">
+                        <div className="alignContent">
                       
                          <img style={{width : '20px' , height: '20px'}} src= {process.env.PUBLIC_URL+"/imgs/ethereum_icon.png"} />
                          <p id="price">{product.price} Eth</p>

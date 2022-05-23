@@ -143,8 +143,9 @@
 	width: 150px;
 	height:60px;
 	margin-bottom: 10px;
-	background-color: #ACAAFF;
-	border-color: #ACAAFF;
+	
+	background-color: #ff4040;
+	border-color: #fc5353;
 	box-shadow: 0px 1px 2px rgba(75, 75, 75, 0.582);
 
 
@@ -152,9 +153,9 @@
 
 
 .buy_btn_group button:hover {
-
-	background-color: #ff4040;
-	border-color: #fc5353;
+	background-color: #ACAAFF;
+	border-color: #ACAAFF;
+	
 }
 
 .owner_area{
@@ -168,6 +169,37 @@
 	width: 100%;
 	position: relative;
 }
+
+
+
+.mydetail_btn_group button {
+	position:absolute;
+	 bottom:0;
+	right:0;
+	width: 150px;
+	height:60px;
+	margin-bottom: 10px;
+	background-color: #4542f3;
+	border-color: #302df8;
+}
+
+.mydetail_btn_group button:hover {
+	background-color: #ACAAFF;
+	border-color: #ACAAFF;
+}
+
+.my-form-group {
+
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	margin-left: 70px;
+	margin-right: 70px;
+	margin-top: 40px;
+	
+}
+
+
 
 
 

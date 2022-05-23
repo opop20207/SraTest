@@ -8,7 +8,7 @@ function MyCollectionItem(props) {
     const renderItems = () =>
         props.products &&
         props.products.map((product) => (
-            <div key={product.id} className="card">
+            <div key={product.id} className="mycard">
                 <NavLink to={`/MyCollection/${product.id}`}>
 
                 <div  className="imgcontent">
@@ -16,7 +16,7 @@ function MyCollectionItem(props) {
                 <SkinView3d imgLink={product.imageURI} />
                 </div>
                 
-                <div id="cardContent">
+                <div id="cardcontent">
                     <p id="title">{product.name}</p>
                         <p id="price">{product.description}</p>
                 </div>
