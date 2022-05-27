@@ -1,42 +1,30 @@
 import * as skinview from "skinview3d";
-import {useEffect} from 'react';
-import reactImageSize from 'react-image-size';
+import {useEffect, useRef} from 'react';
 
 function SkinView3d({ imgLink }) {
-    let skinViewer;
-    let rotateAnimation;
+    const skinViewer = useRef();
+    const rotateAnimation = useRef();
 
-    const isAble2Dto3D = async() => {
-      try {
-        const {width, height} = await reactImageSize(imgLink);
-        console.log(width + " and " + height);
-        return width == 64 && height == 64;
-      } catch {
-        console.log("fail to load image");
-        return false;
-      }
-    }
-
-  const initializeViewer = async() => {
-    const isAble = await isAble2Dto3D();
-    if (!isAble) return;
-
-    skinViewer = new skinview.FXAASkinViewer({
+  const initializeViewer = () => {
+    skinViewer.current = new skinview.FXAASkinViewer({
       canvas: document.getElementById(imgLink),
     });
-    skinViewer.width=200;
-    skinViewer.height=200;
-    skinViewer.loadSkin(imgLink);
+    skinViewer.current.width=200;
+    skinViewer.current.height=200;
+    skinViewer.current.loadSkin(imgLink);
 
-    rotateAnimation = null;
+    rotateAnimation.current = null;
+
+    console.log(skinViewer);
   }
 
   const onMouse = () => {
+    console.log(skinViewer);
     if(!skinViewer) {
       console.log("onMouse : " + "return!");
       return;
     }
-    rotateAnimation = skinViewer.animations.add(
+    rotateAnimation.current = skinViewer.current.animations.add(
         skinview.RotatingAnimation
     );
   }
@@ -46,13 +34,13 @@ function SkinView3d({ imgLink }) {
       console.log("outMouse : " + "return!");
       return;
     }
-      rotateAnimation.resetAndRemove();
-      rotateAnimation = null;
+      rotateAnimation.current.resetAndRemove();
+      rotateAnimation.current = null;
   }
 
   useEffect(() => {
     initializeViewer();
-  }, [imgLink])
+  }, [])
 
   return (
     <div>
