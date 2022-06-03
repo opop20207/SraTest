@@ -22,7 +22,8 @@ function MarketPlaceItem(props) {
                 <NavLink to={`/MarketPlace/${product.id}`} style={{textDecoration:'none'}}>
 
                     <div  className="imgContent">
-                    <img src={product.imageURI} />
+                        {/* <img src={product.imageURI} /> */}
+                        <SkinView3d imgLink={product.imageURI} />
                     
                     </div>
                     

@@ -4,24 +4,21 @@ import {useEffect, useRef} from 'react';
 function SkinView3d({ imgLink }) {
     const skinViewer = useRef();
     const rotateAnimation = useRef();
+    const milliseconds = new Date().getMilliseconds();
 
   const initializeViewer = () => {
     skinViewer.current = new skinview.FXAASkinViewer({
-      canvas: document.getElementById(imgLink),
+      canvas: document.getElementById(imgLink + milliseconds),
     });
     skinViewer.current.width=200;
     skinViewer.current.height=200;
     skinViewer.current.loadSkin(imgLink);
 
     rotateAnimation.current = null;
-
-    console.log(skinViewer);
   }
 
   const onMouse = () => {
-    console.log(skinViewer);
     if(!skinViewer) {
-      console.log("onMouse : " + "return!");
       return;
     }
     rotateAnimation.current = skinViewer.current.animations.add(
@@ -31,7 +28,6 @@ function SkinView3d({ imgLink }) {
 
   const outMouse = () => {
     if(!rotateAnimation) {
-      console.log("outMouse : " + "return!");
       return;
     }
       rotateAnimation.current.resetAndRemove();
@@ -44,7 +40,7 @@ function SkinView3d({ imgLink }) {
 
   return (
     <div>
-      <canvas id={imgLink} onMouseOver={onMouse} onMouseOut={outMouse} />
+      <canvas id={imgLink + milliseconds} onMouseOver={onMouse} onMouseOut={outMouse} />
     </div>
   );
 }
