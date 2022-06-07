@@ -3,6 +3,7 @@ import { useParams, NavLink } from "react-router-dom";
 import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
 import useMoralisProvider from "../../hooks/useMoralisProvider";
 import "../../static/css/Create.css";
+import SkinView3d from "../../hooks/SkinView3d";
 
 function MarketPlaceItemDetail() {
     const { id } = useParams();
@@ -33,7 +34,8 @@ function MarketPlaceItemDetail() {
                 <div >
                     <label className="wrap_preview" for="file" >
                         <div className="preview_image">
-                            <img src={nft?.imageURI} />
+                            {/* <img src={nft?.imageURI} /> */}
+                            <SkinView3d imgLink={nft?.imageURI} width={500} height={500} />
                         </div>
                     </label>
                 </div>

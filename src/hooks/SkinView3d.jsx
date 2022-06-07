@@ -1,7 +1,7 @@
 import * as skinview from "skinview3d";
 import {useEffect, useRef} from 'react';
 
-function SkinView3d({ imgLink }) {
+function SkinView3d({ imgLink, width=200, height=200 }) {
     const skinViewer = useRef();
     const rotateAnimation = useRef();
     const milliseconds = new Date().getMilliseconds();
@@ -10,8 +10,8 @@ function SkinView3d({ imgLink }) {
     skinViewer.current = new skinview.FXAASkinViewer({
       canvas: document.getElementById(imgLink + milliseconds),
     });
-    skinViewer.current.width=200;
-    skinViewer.current.height=200;
+    skinViewer.current.width=width;
+    skinViewer.current.height=height;
     skinViewer.current.loadSkin(imgLink);
 
     rotateAnimation.current = null;
@@ -35,8 +35,9 @@ function SkinView3d({ imgLink }) {
   }
 
   useEffect(() => {
+    if(!imgLink) return;
     initializeViewer();
-  }, [])
+  }, [imgLink])
 
   return (
     <div>
