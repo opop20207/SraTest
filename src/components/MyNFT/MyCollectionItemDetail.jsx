@@ -5,7 +5,7 @@ import useMoralisProvider from "../../hooks/useMoralisProvider";
 import useNFTInfoProvider from "../../hooks/useNFTInfoProvider";
 import Web3 from "web3";
 import ModalSell from "./ModalSell";
-import SkinView3d from "../../hooks/SkinView3d";
+import SkinView3dMouseWheel from "../../hooks/SkinView3dMouseWheel";
 
 function MyCollectionItemDetail() {
     const { id } = useParams();
@@ -172,7 +172,8 @@ function MyCollectionItemDetail() {
                         <label className="wrap_preview" for="file" >
                             <div className="preview_image">
                                 {/* <img src={nft?.imageURI} /> */}
-                                <SkinView3d imgLink={nft?.imageURI} width={500} height={500} />
+                                {/* <SkinView3d imgLink={nft?.imageURI} width={500} height={500} /> */}
+                                <SkinView3dMouseWheel imgLink={nft?.imageURI} width={500} height={500} />
                             </div>
                         </label>
                     </div>
