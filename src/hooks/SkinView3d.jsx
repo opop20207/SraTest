@@ -43,7 +43,6 @@ function SkinView3d({ imgLink, width=200, height=200 }) {
 
   useEffect(() => {
     if(!imgLink) return;
-    console.log("useEffect");
     initializeViewer();
   }, [imgLink])
 

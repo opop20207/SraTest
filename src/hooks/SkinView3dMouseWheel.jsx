@@ -24,7 +24,6 @@ function SkinView3dMouseWheel({ imgLink, width=200, height=200 }) {
 
   useEffect(() => {
     if(!imgLink) return;
-    console.log("useEffectMouseWheel");
     initializeViewer();
   }, [imgLink])
 

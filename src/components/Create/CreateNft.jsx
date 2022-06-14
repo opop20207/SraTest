@@ -5,6 +5,7 @@ import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappP
 import "../../static/css/Create.css";
 import useMoralisProvider from "../../hooks/useMoralisProvider";
 import useNFTInfoProvider from "../../hooks/useNFTInfoProvider";
+import SkinView3dMouseWheel from "../../hooks/SkinView3dMouseWheel";
 
 function CreateNft() {
     const { authenticate, isAuthenticated, Moralis } = useMoralis();
@@ -90,7 +91,7 @@ function CreateNft() {
 
     function readImage(e) {
         const reader = new FileReader();
-        const previewImage = document.getElementById("preview-image");
+        //const previewImage = document.getElementById("preview-image");
        
         // 이미지가 로드가 된 경우
         if(e.target.files && e.target.files[0]){
@@ -105,7 +106,7 @@ function CreateNft() {
             reader.readAsDataURL(e.target.files[0]);
         }
         else{
-            previewImage.src = "";
+            //previewImage.src = "";
         }
     }
     // input file에 change 이벤트 부여
@@ -142,7 +143,8 @@ function CreateNft() {
                             /> 
                             <label className="wrap_preview" for="file"  onMouseOver={ () => hoverInenvet()} onMouseOut = { () => hoverOutenvet()}>
                                 <div className="preview_image">
-                                { preImage != "" ?  <img  id="preview-image" src = { preImage} /> :  "" }
+                                {/* { preImage != "" ?  <img  id="preview-image" src = { preImage} /> :  "" } */}
+                                { preImage != "" ?  <SkinView3dMouseWheel  imgLink = { preImage} width={500} height={500} /> :  "" }
                                 </div>
                          
                                 <div className="default_image">
