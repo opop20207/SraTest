@@ -2,6 +2,7 @@ import { useMoralis } from "react-moralis";
 import { useEffect, useState } from "react";
 import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
 import MyCollectionItem from "./MyCollectionItem";
+import IsnotLogin from "./IsnotLogin";
 import '../../static/css/MyCollection.css';
 import '../../static/css/itemcard.css';
 
@@ -41,10 +42,11 @@ function MyCollection() {
 
     if (!isAuthenticated) {
         return (
-            <div>
-                <h1>로그인부터하셈 ㅋㅋ</h1>
-                <button onClick={() => authenticate()}>Connect MetaMask</button>
-            </div>
+
+            <IsnotLogin authenticateclick = {authenticate}>
+
+            </IsnotLogin>
+            
         );
     }
 
