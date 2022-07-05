@@ -39,7 +39,8 @@ function Footer(){
                 
                 <ul>
                     <li> <a>metamask</a></li>
-            
+                    <li> <a>깃허브 주소</a></li>
+                
                 </ul>
             </div>
         
