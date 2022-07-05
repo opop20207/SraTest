@@ -13,7 +13,8 @@
     width: 220px;
     height: 320px;
     background-color: white;
-
+    border: 1px rgb(243, 243, 243) solid;
+    box-shadow: 0px 1px 1px 1px rgb(244, 244, 244);
     margin: 20px;
     transition: 0.3s;
     overflow: hidden;
@@ -52,7 +53,7 @@
 
 .alignContent{
     display: flex;
-	flex-direction: row;
+    justify-content: flex-end;
     
 }
 
@@ -73,12 +74,17 @@
 
 .mycard:hover{
   
-
     border-radius: 80px;
     transform: translateY(-5px);
     box-shadow: 0px 2px 4px rgba(75, 75, 75, 0.582);
 }
 
+
+p[id= 'title']{
+    font-size: 22px;
+    font-weight: 500;
+    margin-left: 5px;
+}
 
 
 

@@ -6,6 +6,7 @@ import "../../static/css/Create.css";
 import useMoralisProvider from "../../hooks/useMoralisProvider";
 import useNFTInfoProvider from "../../hooks/useNFTInfoProvider";
 import SkinView3dMouseWheel from "../../hooks/SkinView3dMouseWheel";
+import IsnotLogin from "../MyNFT/IsnotLogin"
 
 function CreateNft() {
     const { authenticate, isAuthenticated, Moralis } = useMoralis();
@@ -113,10 +114,7 @@ function CreateNft() {
 
     if (!isAuthenticated) {
         return (
-            <div>
-                <h1>로그인부터하셈 ㅋㅋ</h1>
-                <button onClick={() => authenticate()}>Connect MetaMask</button>
-            </div>
+           < IsnotLogin authenticateclick = {authenticate}></IsnotLogin>
         );
     }
 

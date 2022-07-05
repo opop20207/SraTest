@@ -16,13 +16,15 @@ import "antd/dist/antd.css";
 import MarketPlaceItemBuy from "./components/MarketPlace/MarketPlaceItemBuy";
 import MarketPlaceItemDetail from "./components/MarketPlace/MarketPlaceItemDetail";
 
+
+
 function App() {
     return (
         <div className="App">
             <header className="App-header">
                 <Router>
                     <Header />
-                    <Routes>
+                    <Routes >
                         <Route path="/" element={<Main />}></Route>
                         <Route path="/MyNFT" element={<MyNFT />}></Route>
                         <Route path="/Create" element={<Create />}></Route>

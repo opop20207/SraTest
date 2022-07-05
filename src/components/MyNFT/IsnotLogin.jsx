@@ -16,8 +16,9 @@ function IsnotLogin(props){
                 <img src= { process.env.PUBLIC_URL+"/imgs/metamask_img.png"}/>
                 <button  class="btn btn-primary" id="upload" onClick={ authenticateclick}>Connect MetaMask</button>
            
+           
                 <br/>
-                <p>클로넨스는 메타마스크를 통한 계정 연동을 지향합니다</p>
+                <p>클로넨스는 메타마스크를 통해 거래할수있습니다.</p>
             </div>
                
              
