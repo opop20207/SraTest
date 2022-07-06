@@ -1,5 +1,4 @@
-import { useMoralis } from "react-moralis";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Web3 from "web3";
 import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
@@ -48,7 +47,7 @@ function MyCollectionItemSell() {
         const price = document.getElementById("price").value;
 
         await notify("Approval 진행 중..");
-        const approval = await approveMarketPlace(contractAddress, tokenId);
+        await approveMarketPlace(contractAddress, tokenId);
         await notify("Approval 진행 완료! placeOffering 진행 중..");
         const offering = await placeOffering(contractAddress, tokenId, price);
         await notify("placeOffering 진행 완료! Moralis DB Update 진행 중..");

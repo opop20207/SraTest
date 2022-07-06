@@ -1,16 +1,11 @@
-import React, { PureComponent, useState } from 'react';
+import React, { useState } from 'react';
 import '../../static/css/ModalSell.css';
 import "../../static/css/MarketPlace.css";
 
 function ModalSell(props){
-
-
     const [price, setprice] = useState(0);
-   
     const { open, close, header, Loading} = props;
       
-   
-
     const handleChange = (e) => {
         console.log("핸들러 작동"+price)
         setprice(e.target.value);
@@ -23,11 +18,8 @@ function ModalSell(props){
         props.completeModal(price);
       };
 
-
-  
         // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
         return (
-      
              // 모달이 열릴때 openModal 클래스가 생성된다.
              <div className={open ? 'openModal modal' : 'modal'}>
              {open ? (

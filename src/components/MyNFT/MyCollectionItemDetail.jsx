@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
 import useMoralisProvider from "../../hooks/useMoralisProvider";
 import useNFTInfoProvider from "../../hooks/useNFTInfoProvider";
@@ -79,7 +79,7 @@ function MyCollectionItemDetail() {
         await setLoading(true);
 
         await setnotify("Approval 진행 중..");
-        const approval = await approveMarketPlace(contractAddress, tokenId);
+        await approveMarketPlace(contractAddress, tokenId);
         await setnotify("Approval 진행 완료! placeOffering 진행 중..");
         const offering = await placeOffering(contractAddress, tokenId, price);
         await setnotify("placeOffering 진행 완료! Moralis DB Update 진행 중..");

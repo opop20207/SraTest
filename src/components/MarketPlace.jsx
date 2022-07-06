@@ -1,17 +1,14 @@
 import { useMoralis } from "react-moralis";
 import { useEffect, useState } from "react";
-import Web3 from "web3";
 import { useMoralisDapp } from "../providers/MoralisDappProvider/MoralisDappProvider";
 import MarketPlaceItem from "./MarketPlace/MarketPlaceItem";
 import "../static/css/MarketPlace.css";
 
 function MarketPlace(){
-    const { authenticate, Moralis, isAuthenticated, user, refetchUserData } =
-    useMoralis();
+    const { Moralis } = useMoralis();
     const [products, setproducts] = useState([]);
     const [Loading, setLoading] = useState(true);
     const { walletAddress } = useMoralisDapp();
-    const [PageContent,setPageContent] = useState();
 
     useEffect(() => {
         if (!walletAddress) return;
