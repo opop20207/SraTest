@@ -37,7 +37,7 @@
     "web3-eth-accounts": "^1.7.3"
   },
   "scripts": {
-    "start": "set PORT=80 && react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
