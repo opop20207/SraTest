@@ -4,18 +4,13 @@ import '../../static/css/itemcard.css'
 import SkinView3d from '../../hooks/SkinView3d';
 
 function MarketPlaceItem(props) {
-
-    function Hoverevent(event){
-       
-        event.target.style.transform="translateY( -5px)"
-    }
-    function HoverOutevent(event){
-      
-        event.target.style.transform="translateY( 5px)" 
-    }
-
+    // function Hoverevent(event){
+    //     event.target.style.transform="translateY( -5px)"
+    // }
+    // function HoverOutevent(event){
+    //     event.target.style.transform="translateY( 5px)" 
+    // }
     const renderItems = () =>
-      
         props.products &&
         props.products.map((product) => (
             <div key={product.id} className="Card" >
