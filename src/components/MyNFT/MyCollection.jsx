@@ -52,7 +52,7 @@ function MyCollection() {
 
     return (
         <div class="MyColPage">
-            <h2>MyColletion</h2>
+            <h2>My Colletions</h2>
    
             {Loading ? 
                       <div id="loading">

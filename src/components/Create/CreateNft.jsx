@@ -127,7 +127,7 @@ function CreateNft() {
 
     return (
         <>
-            <div class="mb-3">
+            <div className="createPage">
                 <h2 className="pageName">스킨 NFT Create</h2>
                 <div class="form-group">
                    <div className="imgcontent">
@@ -141,8 +141,8 @@ function CreateNft() {
                             /> 
                             <label className="wrap_preview" for="file"  onMouseOver={ () => hoverInenvet()} onMouseOut = { () => hoverOutenvet()}>
                                 <div className="preview_image">
-                                {/* { preImage != "" ?  <img  id="preview-image" src = { preImage} /> :  "" } */}
-                                { preImage != "" ?  <SkinView3dMouseWheel  imgLink = { preImage} width={500} height={500} /> :  "" }
+                                { preImage != "" ?  <img  id="preview-image" src = { preImage} /> :  "" }
+                              
                                 </div>
                          
                                 <div className="default_image">
@@ -196,6 +196,18 @@ function CreateNft() {
                         </div>
                     </div>
                 </div>
+                { preImage != "" ?  
+                
+                <>
+                 <h2 className="skinPreviewTitle">스킨 미리보기 </h2>
+                <div className="skinPreview">
+                    <div className="skinPreviewBox">
+                        <SkinView3dMouseWheel  imgLink = { preImage} width={500} height={500} />
+                    </div>
+                </div>
+                </>
+               
+                :  "" }
             </div>
         </>
     );

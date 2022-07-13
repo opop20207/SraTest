@@ -164,18 +164,18 @@ function MyCollectionItemDetail() {
     
 
     return (
-        <div >
+        <div className="itemDetailPage">
             
             <div className="my-form-group">
                 <div className="imgcontent">
                     <div >
-                        <label className="wrap_preview" for="file" >
-                            <div className="preview_image">
+                       
+                        <div className="skinPreviewBox">
                                 {/* <img src={nft?.imageURI} /> */}
                                 {/* <SkinView3d imgLink={nft?.imageURI} width={500} height={500} /> */}
                                 <SkinView3dMouseWheel imgLink={nft?.imageURI} width={500} height={500} />
                             </div>
-                        </label>
+                       
                     </div>
                 </div>
 

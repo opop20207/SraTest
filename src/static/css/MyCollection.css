@@ -4,12 +4,14 @@
     background-size: cover;
     background-attachment: fixed;
    height: 100vh;
-   padding: 40px;
-
+   padding: 100px 200px 200px 200px;
+   
 }
 
 .MyColPage > h2{
     font-weight: 800;
+    margin-bottom: 50px;
+    font-size: 60px;
 }
 
 .loginContent{

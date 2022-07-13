@@ -47,7 +47,8 @@ function MarketPlace(){
         <div className="MarketPageTotal">
 
             <div className="markettitle">
-                <h2 > MineCraft Avatar</h2>
+            
+                <h2 >Avatar Market</h2>
             </div>
           
             {/* <h5 className="tagtitle">Hot tags</h5> */}
@@ -81,12 +82,6 @@ function MarketPlace(){
 
             <div className="PageContent">
 
-                <div className="filter">
-                    <h3>Filter</h3>
-                  
-                </div>
-                
-                <div className="vertical-line"/>
              
                 <div className="itemlist">
                   

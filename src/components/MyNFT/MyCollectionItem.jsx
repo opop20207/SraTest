@@ -9,7 +9,7 @@ function MyCollectionItem(props) {
         props.products &&
         props.products.map((product) => (
             <div key={product.id} className="mycard">
-                <NavLink to={`/MyCollection/${product.id}`}>
+                <NavLink to={`/MyCollection/${product.id}`} style={{textDecoration:'none'}}>
 
                 <div  className="imgcontent">
                 {/* <img src={product.imageURI} /> */}

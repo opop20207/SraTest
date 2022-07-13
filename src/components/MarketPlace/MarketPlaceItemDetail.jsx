@@ -28,17 +28,17 @@ function MarketPlaceItemDetail() {
     }
 
     return (
-        <>
+        <div className="itemDetailPage">
         <div className="form-group">
             <div className="imgcontent">
                 <div >
-                    <label className="wrap_preview" for="file" >
-                        <div className="preview_image">
+                  
+                        <div className="skinPreviewBox">
                             {/* <img src={nft?.imageURI} /> */}
                             {/* <SkinView3d imgLink={nft?.imageURI} width={500} height={500} /> */}
                             <SkinView3dMouseWheel imgLink={nft?.imageURI} width={500} height={500} />
                         </div>
-                    </label>
+                   
                 </div>
             </div>
 
@@ -82,7 +82,7 @@ function MarketPlaceItemDetail() {
                 <NavLink to={`/MarketPlace/${id}/buy`}><button className="btn btn-primary"><p>Buy</p></button></NavLink>
             </div>
         </div>
-        </>
+        </div>
     );
 }
 
