@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import "../static/css/Main.css";
+import { Link } from 'react-router-dom';
+
 
 function Main(){
     // const imgSliders=[
@@ -16,7 +18,8 @@ function Main(){
     //             <img src = { process.env.PUBLIC_URL+imgslider.src}  style={styles.imgsliderCss}/>
     //         </div>
     //     ));
-        
+
+
     return(
         <div className='mainPage'>
             {/* <StlyedSlider {...settings}>
@@ -27,11 +30,15 @@ function Main(){
                                 <div className='mFCtitle'>
                                     <h1>당신의 스킨을 NFT로  </h1><h1>만들어 보세요!</h1>
                                     <p>수 많은 유저들의 스킨을 둘러보고 구매하세요</p>
-                                    <button className='intoCreateBtn' id='intoCreateBtn'>Create NFT</button>
+                                    <Link className='intoCreateBtn' to={"/Create"}>
+                                     <button  id='intoCreateBtn'>Create NFT</button>
+                                    </Link>
                                 </div>
 
                                 <div className='mFCimgContent'>
 
+                                <img src= { process.env.PUBLIC_URL+"/imgs/home_beeimg.jpeg"}/>
+                                  
                                 </div>
 
                                 

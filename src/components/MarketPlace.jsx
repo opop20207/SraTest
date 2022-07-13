@@ -44,12 +44,15 @@ function MarketPlace(){
  
     return (
 
-        <>
+        <div className="MarketPageTotal">
 
-            <h2 className="markettitle"> MineCraft Avatar</h2>
-            <h5 className="tagtitle">Hot tags</h5>
+            <div className="markettitle">
+                <h2 > MineCraft Avatar</h2>
+            </div>
+          
+            {/* <h5 className="tagtitle">Hot tags</h5> */}
             <div className="TagSearch">
-                <div className="Tags">
+                {/* <div className="Tags">
                     {
                        Tags.map( (tag) => (
                         <div className="tagitem">
@@ -59,7 +62,7 @@ function MarketPlace(){
                        ))
                     }
 
-                </div>
+                </div> */}
                 <div className="Search">
                 
                     <input
@@ -102,7 +105,7 @@ function MarketPlace(){
             
         
        
-        </>
+        </div>
        
     );
 }
