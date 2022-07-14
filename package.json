@@ -63,5 +63,6 @@
   },
   "devDependencies": {
     "react-error-overlay": "6.0.9"
-  }
+  },
+  "proxy": "http://clonens.com:3000"
 }
