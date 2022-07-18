@@ -25,7 +25,7 @@ async function MarketPlaceItem(props) {
                                 params: {
                                     imageURI: product.imageURI.replace(
                                         "%2",
-                                        "/"
+                                        "\\"
                                     ),
                                 },
                             })
