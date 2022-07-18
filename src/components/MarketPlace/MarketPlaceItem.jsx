@@ -19,7 +19,11 @@ async function MarketPlaceItem(props) {
                     to={`/MarketPlace/${product.id}`}
                     style={{ textDecoration: "none" }}>
                     <div className="imgContent">
-                        <img src={axios.get(`/api/${product.imageURI}`)} />
+                        <img
+                            src={axios.get(`/api/ipfs`, {
+                                params: { imageURI: product.imageURI },
+                            })}
+                        />
                         <SkinView3d imgLink={product.imageURI} />
                     </div>
 
