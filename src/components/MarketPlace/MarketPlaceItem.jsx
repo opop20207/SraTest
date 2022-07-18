@@ -23,10 +23,7 @@ async function MarketPlaceItem(props) {
                             product.imageURI,
                             axios.get("/api/ipfs", {
                                 params: {
-                                    imageURI: product.imageURI.replace(
-                                        "%2",
-                                        "\\"
-                                    ),
+                                    imageURI: product.imageURI.toString,
                                 },
                             })
                         )}
