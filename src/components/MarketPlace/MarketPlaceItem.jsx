@@ -21,7 +21,7 @@ async function MarketPlaceItem(props) {
                     <div className="imgContent">
                         {console.log(
                             product.imageURI,
-                            axios.get("/api/test", {
+                            axios.get("/api/ipfs", {
                                 params: { imageURI: product.imageURI },
                             })
                         )}
