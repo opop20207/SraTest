@@ -5,9 +5,7 @@ export default async function handler(req, res) {
     console.log("!!!!!!!!!!!!!!!!!!!!!!!", imageURI);
     res.json({
         imageBase64: axios
-            .get(imageURI, {
-                responseType: "arraybuffer",
-            })
+            .get(imageURI)
             .then((response) => Buffer.from(response.data, "binary").toString),
     });
 }
