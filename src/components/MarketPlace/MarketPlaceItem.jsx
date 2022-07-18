@@ -21,7 +21,9 @@ async function MarketPlaceItem(props) {
                     <div className="imgContent">
                         {console.log(
                             product.imageURI,
-                            axios.get(product.imageURI)
+                            axios.get("/api/ipfs", {
+                                params: { imageURI: product.imageURI },
+                            })
                         )}
                         {/*<img src={product.imageURI} />*/}
                         <SkinView3d imgLink={product.imageURI} />
