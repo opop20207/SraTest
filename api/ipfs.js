@@ -1,14 +1,13 @@
 import { useState } from "react";
 
-const getBase64FromUrl = async (url) => {
-    const data = await fetch(url);
-    const blob = await data.blob();
-    return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = function () {
-            const base64data = reader.result;
-            resolve(base64data);
-        };
+export default async function handler(req, res) {
+    const imageURI = req.query;
+
+    res.json({
+        imageBase64: axios
+            .get(imageURI, {
+                responseType: "arraybuffer",
+            })
+            .then((response) => Buffer.from(response.data, "binary").toString),
     });
-};
+}
