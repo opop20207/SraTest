@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import "../../static/css/itemcard.css";
 import SkinView3d from "../../hooks/SkinView3d";
 import axios from "axios";
+import getBase64FromUrl from "../../../api/ipfs";
 
 async function MarketPlaceItem(props) {
     // function Hoverevent(event){
@@ -19,11 +20,7 @@ async function MarketPlaceItem(props) {
                     to={`/MarketPlace/${product.id}`}
                     style={{ textDecoration: "none" }}>
                     <div className="imgContent">
-                        <img
-                            src={axios.get(`/api/ipfs`, {
-                                params: { imageURI: product.imageURI },
-                            })}
-                        />
+                        <img src={getBase64FromUrl(proudct.imageURI)} />
                         <SkinView3d imgLink={product.imageURI} />
                     </div>
 
