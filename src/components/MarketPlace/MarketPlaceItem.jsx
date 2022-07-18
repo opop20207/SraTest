@@ -20,8 +20,12 @@ async function MarketPlaceItem(props) {
                     style={{ textDecoration: "none" }}>
                     <div className="imgContent">
                         {console.log(
-                            product.imageURI,
-                            axios.post("/api/ipfs", {
+                            axios.post("/api/test", {
+                                params: {
+                                    imageURI: product.imageURI,
+                                },
+                            }),
+                            axios.get("/api/ipfs", {
                                 params: {
                                     imageURI: product.imageURI,
                                 },
