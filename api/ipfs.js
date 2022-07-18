@@ -4,10 +4,6 @@ export default async function handler(req, res) {
     const imageURI = req.query.imageURI;
 
     res.json({
-        imageBase64: axios
-            .get(imageURI, {
-                responseType: "arraybuffer",
-            })
-            .then((response) => Buffer.from(response.data, "binary").toString),
+        imageBase64: fetch(imageURI).then((response) => response.blob()),
     });
 }
