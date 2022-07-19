@@ -25,8 +25,13 @@ async function MarketPlaceItem(props) {
                                     params: {
                                         imageURI: product.imageURI,
                                     },
-                                }).then((response) => response)
+                                }).then((response) => response.data.imageBase64)
                             )}
+                        <img src = {axios.get("/api/ipfs", {
+                                    params: {
+                                        imageURI: product.imageURI,
+                                    },
+                                }).then((response) => response.data.imageBase64)}/>
                         <SkinView3d imgLink={product.imageURI} />
                     </div>
 
