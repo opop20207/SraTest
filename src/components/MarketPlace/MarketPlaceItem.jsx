@@ -18,16 +18,15 @@ async function MarketPlaceItem(props) {
                 <NavLink
                     to={`/MarketPlace/${product.id}`}
                     style={{ textDecoration: "none" }}>
+                       
                     <div className="imgContent">
-                        <img
-                            src={
+                        {console.log(
                                 axios.get("/api/ipfs", {
                                     params: {
                                         imageURI: product.imageURI,
                                     },
                                 }).imageBase64
-                            }
-                        />
+                            )}
                         <SkinView3d imgLink={product.imageURI} />
                     </div>
 
