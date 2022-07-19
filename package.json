@@ -12,7 +12,6 @@
     "crypto": "^1.0.1",
     "crypto-browserify": "^3.12.0",
     "eth-lib": "^0.1.29",
-    "http-proxy-middleware": "^2.0.6",
     "moralis": "^1.5.9",
     "os-browserify": "^0.3.0",
     "random-hash": "^4.0.1",
