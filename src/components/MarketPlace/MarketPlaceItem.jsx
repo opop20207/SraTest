@@ -31,7 +31,13 @@ async function MarketPlaceItem(props) {
                                 },
                             })
                         )}
-                        {/*<img src={product.imageURI} />*/}
+                        <img
+                            src={axios.get("/api/ipfs", {
+                                params: {
+                                    imageURI: product.imageURI,
+                                },
+                            })}
+                        />
                         <SkinView3d imgLink={product.imageURI} />
                     </div>
 
