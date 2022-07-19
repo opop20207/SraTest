@@ -25,7 +25,7 @@ async function MarketPlaceItem(props) {
                                     params: {
                                         imageURI: product.imageURI,
                                     },
-                                }).imageBase64
+                                }).then((response) => response.imageBase64)
                             )}
                         <SkinView3d imgLink={product.imageURI} />
                     </div>
