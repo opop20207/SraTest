@@ -20,7 +20,8 @@ async function MarketPlaceItem(props) {
                     style={{ textDecoration: "none" }}>
                        
                     <div className="imgContent">
-                        {console.log(
+                        
+                        {/*console.log(
                                 axios.get("/api/ipfs", {
                                     params: {
                                         imageURI: product.imageURI,
@@ -31,8 +32,8 @@ async function MarketPlaceItem(props) {
                                     params: {
                                         imageURI: product.imageURI,
                                     },
-                                }).then((response) => response.data.imageBase64)}/>
-                        <SkinView3d imgLink={product.imageURI} />
+                                }).then((response) => response.data.imageBase64)}/>*/}
+                        <SkinView3d imgLink={product.imageURI} /> 
                     </div>
 
                     <div className="cardContent">
